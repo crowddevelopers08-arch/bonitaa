@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const GOLD = "221,185,90";
+const GOLD = [221, 185, 90] as const;
 
 export default function DarkBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -21,6 +21,8 @@ export default function DarkBackground() {
     const dpr = () => Math.min(window.devicePixelRatio || 1, 2);
 
     function resize() {
+      if (!canvas || !ctx) return; // Add this check
+      
       W = window.innerWidth;
       H = window.innerHeight;
 
@@ -55,10 +57,11 @@ export default function DarkBackground() {
         if (this.x > W + 20) this.x = -20;
       }
       draw() {
+        if (!ctx) return; // Add this check
         const o = this.opacity * (0.5 + 0.5 * Math.sin(this.twinkle));
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${GOLD},${o})`;
+        ctx.fillStyle = `rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},${o})`;
         ctx.fill();
       }
     }
@@ -68,6 +71,7 @@ export default function DarkBackground() {
     }
 
     function loop() {
+      if (!ctx) return; // Add this check
       ctx.clearRect(0, 0, W, H);
       for (const p of particles) { p.update(); p.draw(); }
       raf = requestAnimationFrame(loop);
@@ -89,7 +93,6 @@ export default function DarkBackground() {
 
   return (
     <>
-      {/* only animations/classes — NO body overflow changes */}
       <style jsx global>{`
         @keyframes drift {
           0%   { transform: translate(0px, 0px) scale(1); }
@@ -111,7 +114,6 @@ export default function DarkBackground() {
         .grain { animation: grainMove 0.5s steps(2) infinite; }
       `}</style>
 
-      {/* background layer only */}
       <div
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 -z-10"
