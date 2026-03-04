@@ -78,8 +78,8 @@ export default function AgencySection() {
         <div className="relative z-10 w-full max-w-[1400px] mx-auto flex flex-col lg:flex-row"
           style={{ minHeight:"clamp(500px,88vh,820px)" }}>
 
-          {/* ══════════════ LEFT ══════════════ */}
-          <div className="relative flex flex-shrink-0" style={{ width:"clamp(280px,44vw,600px)" }}>
+          {/* ══════════════ LEFT (Desktop only) ══════════════ */}
+          <div className="relative hidden lg:flex flex-shrink-0" style={{ width:"clamp(280px,44vw,600px)" }}>
 
             {/* Vertical BG text */}
             <div className="hidden lg:flex items-center justify-center select-none" style={{ width:52 }}>
@@ -131,7 +131,7 @@ export default function AgencySection() {
                   <div className="img-card rounded-xl w-full h-full"
                     style={{ boxShadow:"0 20px 55px rgba(0,0,0,0.65)", border:"1.5px solid rgba(221,185,90,0.2)" }}>
                     <img
-                      src="/clinic-team-1.png"
+                      src="/hairs.jpg"
                       alt="Bonitaa specialist"
                       className="w-full h-full object-cover block"
                       style={{ filter:"brightness(0.85) contrast(1.06) saturate(0.92)" }}
@@ -145,7 +145,7 @@ export default function AgencySection() {
                   <div className="img-card rounded-xl w-full h-full relative"
                     style={{ boxShadow:"0 20px 55px rgba(0,0,0,0.65)", border:"1.5px solid rgba(221,185,90,0.2)" }}>
                     <img
-                      src="/clinic-team-2.png"
+                      src="/woman-struggle-brush-hair.jpg"
                       alt="Bonitaa team"
                       className="w-full h-full object-cover block"
                       style={{ filter:"brightness(0.82) contrast(1.06) saturate(0.92)" }}
@@ -175,7 +175,7 @@ export default function AgencySection() {
             </div>
           </div>
 
-          {/* ══════════════ RIGHT ══════════════ */}
+          {/* ══════════════ RIGHT CONTENT (with mobile title and paragraph) ══════════════ */}
           <div className="flex-1 flex flex-col justify-center px-6 sm:px-10 lg:px-14 py-14 lg:py-0">
 
             {/* Eyebrow */}
@@ -186,7 +186,7 @@ export default function AgencySection() {
               </div>
             </Reveal>
 
-            {/* Headline — reduced font size, gold theme */}
+            {/* Headline */}
             <Reveal dir="right" delay={0.12} className="mb-3">
               <h1 style={{
                 fontFamily:"'Playfair Display',serif",
@@ -199,6 +199,68 @@ export default function AgencySection() {
                 <span style={{ color:"#ddb95a", fontStyle:"italic" }}>Hair Care?</span>
               </h1>
             </Reveal>
+
+            {/* Mobile Image Section (visible only on mobile) */}
+            <div className="lg:hidden w-full my-8">
+              <div className="relative w-full" style={{ height: "280px" }}>
+                {/* Experience badge for mobile - repositioned */}
+                <div className="absolute z-20" style={{ top: "10px", left: "10px" }}>
+                  <p style={{ color:"rgba(221,185,90,0.6)", fontSize:"11px", fontWeight:600, letterSpacing:"0.12em", textTransform:"uppercase", marginBottom:2 }}>
+                    Experience
+                  </p>
+                  <div className="flex items-baseline leading-none">
+                    <span style={{ color:"#ddb95a", fontSize:"32px", fontWeight:900, fontFamily:"'Barlow Condensed',sans-serif", lineHeight:1 }}>18+</span>
+                    <span style={{ color:"#f0e8d5", fontSize:"32px", fontWeight:900, fontFamily:"'Barlow Condensed',sans-serif", lineHeight:1, marginLeft:5 }}>Years</span>
+                  </div>
+                </div>
+
+                {/* Mobile image grid */}
+                <div className="absolute inset-0 flex items-end gap-2 px-2">
+                  {/* Left image - shorter */}
+                  <div style={{ flex: "0 0 46%", height: "65%" }}>
+                    <div className="img-card rounded-xl w-full h-full"
+                      style={{ boxShadow:"0 20px 55px rgba(0,0,0,0.65)", border:"1.5px solid rgba(221,185,90,0.2)" }}>
+                      <img
+                        src="/hairs.jpg"
+                        alt="Bonitaa specialist"
+                        className="w-full h-full object-cover block"
+                        style={{ filter:"brightness(0.85) contrast(1.06) saturate(0.92)" }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Right image - taller */}
+                  <div style={{ flex: "0 0 50%", height: "85%" }}>
+                    <div className="img-card rounded-xl w-full h-full relative"
+                      style={{ boxShadow:"0 20px 55px rgba(0,0,0,0.65)", border:"1.5px solid rgba(221,185,90,0.2)" }}>
+                      <img
+                        src="/woman-struggle-brush-hair.jpg"
+                        alt="Bonitaa team"
+                        className="w-full h-full object-cover block"
+                        style={{ filter:"brightness(0.82) contrast(1.06) saturate(0.92)" }}
+                      />
+                      <div className="absolute inset-y-0 left-0 w-0.5 pointer-events-none"
+                        style={{ background:"linear-gradient(to bottom,transparent,#ddb95a,transparent)", opacity:0.55 }}/>
+                      <div className="absolute inset-0 pointer-events-none" style={{ background:"linear-gradient(to top,rgba(8,11,18,0.45) 0%,transparent 50%)" }}/>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom fade for mobile */}
+                <div className="absolute bottom-0 left-0 right-0 h-12 pointer-events-none"
+                  style={{ background:"linear-gradient(to top,#080b12,transparent)" }}/>
+
+                {/* Corner brackets for mobile */}
+                <div className="absolute pointer-events-none" style={{ top: "65px", left: "8px", zIndex:11 }}>
+                  <div style={{ width:14,height:2,background:"#ddb95a",borderRadius:2 }}/>
+                  <div style={{ width:2,height:14,background:"#ddb95a",borderRadius:2 }}/>
+                </div>
+                <div className="absolute pointer-events-none" style={{ top: "65px", right: "8px", zIndex:11 }}>
+                  <div style={{ width:14,height:2,background:"#ddb95a",borderRadius:2,marginLeft:"auto" }}/>
+                  <div style={{ width:2,height:14,background:"#ddb95a",borderRadius:2,marginLeft:"auto" }}/>
+                </div>
+              </div>
+            </div>
 
             {/* Divider */}
             <Reveal dir="up" delay={0.2} className="mb-6">

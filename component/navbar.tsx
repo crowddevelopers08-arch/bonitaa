@@ -173,30 +173,6 @@ const Navbar = () => {
             className="pt-4 space-y-4 border-t mt-4"
             style={{ borderColor: "rgba(221,185,90,0.15)" }}
           >
-            {/* Customer Support */}
-            <div className="flex items-center px-4">
-              <div
-                className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg mr-3"
-                style={{ background: "#ddb95a" }}
-              >
-                <Phone className="w-5 h-5" style={{ color: "#080b12" }} />
-              </div>
-              <div>
-                <h3
-                  className="text-xs font-semibold uppercase"
-                  style={{ color: "rgba(221,185,90,0.55)" }}
-                >
-                  Customer Support
-                </h3>
-                <a
-                  href="tel:+918108149234"
-                  className="text-sm font-bold"
-                  style={{ color: "#ddb95a" }}
-                >
-                  +91 8108 149 234
-                </a>
-              </div>
-            </div>
 
             {/* Book Button */}
             <div className="text-center px-4">

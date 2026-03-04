@@ -53,10 +53,10 @@ export default function HairSolutions() {
 
         <div className="w-full h-px" style={{ background:"linear-gradient(90deg,transparent,#ddb95a,transparent)" }}/>
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-16 sm:py-24">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-5 sm:py-10">
 
           {/* Heading */}
-          <div className="text-center mb-16 lg:mb-20">
+          <div className="text-center mb-5 lg:mb-15">
             <Reveal dir="down" delay={0.0} className="mb-4">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full" style={{ border:"1px solid rgba(221,185,90,0.28)", background:"rgba(221,185,90,0.06)" }}>
                 <div className="w-2 h-2 rounded-full glow-dot" style={{ background:"#ddb95a" }}/>
@@ -131,7 +131,7 @@ export default function HairSolutions() {
                 {/* Main image card */}
                 <div className="relative overflow-hidden rounded-2xl" style={{ border:"1.5px solid rgba(221,185,90,0.35)", boxShadow:"0 32px 80px rgba(0,0,0,0.65), 0 0 40px rgba(221,185,90,0.1)", zIndex:3, aspectRatio:"3/4.2" }}>
                   <div className="scan-bar"/>
-                  <img src="/hair-result.png" alt="Hair Restoration" className="w-full h-full object-cover block" style={{ filter:"brightness(0.87) contrast(1.06) saturate(0.9)" }}/>
+                  <img src="/mature-man.jpg" alt="Hair Restoration" className="w-full h-full object-cover block" style={{ filter:"brightness(0.87) contrast(1.06) saturate(0.9)" }}/>
                   <div className="absolute inset-0 pointer-events-none" style={{ background:"linear-gradient(to top,rgba(8,11,18,0.6) 0%,transparent 45%)" }}/>
                   <div className="absolute inset-y-0 left-0 w-0.5 pointer-events-none" style={{ background:"linear-gradient(to bottom,transparent,#ddb95a,transparent)", opacity:0.5 }}/>
                 </div>
