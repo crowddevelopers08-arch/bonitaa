@@ -145,7 +145,7 @@ export default function AgencySection() {
                   <div className="img-card rounded-xl w-full h-full relative"
                     style={{ boxShadow:"0 20px 55px rgba(0,0,0,0.65)", border:"1.5px solid rgba(221,185,90,0.2)" }}>
                     <img
-                      src="/woman-struggle-brush-hair.jpg"
+                      src="/woman-stru.jpg"
                       alt="Bonitaa team"
                       className="w-full h-full object-cover block"
                       style={{ filter:"brightness(0.82) contrast(1.06) saturate(0.92)" }}
@@ -234,7 +234,7 @@ export default function AgencySection() {
                     <div className="img-card rounded-xl w-full h-full relative"
                       style={{ boxShadow:"0 20px 55px rgba(0,0,0,0.65)", border:"1.5px solid rgba(221,185,90,0.2)" }}>
                       <img
-                        src="/woman-struggle-brush-hair.jpg"
+                        src="/woman-stru.jpg"
                         alt="Bonitaa team"
                         className="w-full h-full object-cover block"
                         style={{ filter:"brightness(0.82) contrast(1.06) saturate(0.92)" }}
