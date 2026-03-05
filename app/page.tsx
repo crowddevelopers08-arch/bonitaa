@@ -5,6 +5,7 @@ import Footer from "@/component/footer";
 import HairSolutions from "@/component/hairsolutions";
 import MobileActionBar from "@/component/mobile-bar";
 import Navbar from "@/component/navbar";
+import PopupAd from "@/component/popadds";
 import ReviewsSection from "@/component/reviewsection";
 import TransformationsSection from "@/component/transformationssection";
 import TreatmentsSection from "@/component/treatmentssection";
@@ -25,6 +26,8 @@ export default function Home() {
     <FaqSection />
     <Footer  />
     <MobileActionBar  />
+    <PopupAd />
+    
     </>
   );
 }

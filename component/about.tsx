@@ -153,7 +153,7 @@ export default function AppointmentSection() {
 
         <div className="w-full h-px" style={{ background:"linear-gradient(90deg,transparent,#ddb95a,transparent)" }}/>
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-14 sm:py-20">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-8 sm:py-15">
           <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
 
             {/* ═══════════ LEFT ═══════════ */}

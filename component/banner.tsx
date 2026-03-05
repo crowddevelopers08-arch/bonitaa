@@ -157,7 +157,7 @@ export default function HeroBanner() {
 
         <div className="w-full h-px" style={{ background:"linear-gradient(90deg,transparent,#ddb95a,transparent)" }}/>
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-10 sm:py-14 lg:py-20">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-10 sm:py-14 lg:py-10">
           <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-12 xl:gap-16">
 
             {/* ══ LEFT ══ */}
