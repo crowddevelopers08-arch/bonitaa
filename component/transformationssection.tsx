@@ -355,20 +355,6 @@ export default function TransformationsSection() {
                             "linear-gradient(to top,rgba(8,11,18,0.65) 0%,transparent 50%)",
                         }}
                       />
-
-                      {/* Tag badge - visible on all screens */}
-                      <div className="absolute top-3 left-3 z-10">
-                        <span
-                          className="px-2.5 py-1 rounded-full text-xs font-bold"
-                          style={{
-                            background: "rgba(221,185,90,0.9)",
-                            color: "#080b12",
-                            fontSize: 10,
-                          }}
-                        >
-                          {t.tag}
-                        </span>
-                      </div>
                     </div>
 
                     {/* Card content - only visible on desktop */}
