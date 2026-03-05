@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { JSX, useEffect, useRef, useState } from "react";
 import { CountUp, Reveal } from "./animation";
 // import { Reveal, Stagger, CountUp } from "./animations";
 
