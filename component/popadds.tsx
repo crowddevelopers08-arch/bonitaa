@@ -103,7 +103,12 @@ export default function PopupAd() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-3">
-              <button className="group flex-1 text-black px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 animate-button-1"
+              <button onClick={() => {
+  const el = document.getElementById("Form");
+  if (!el) return;
+  const y = el.getBoundingClientRect().top + window.pageYOffset - 90; // 90px header
+  window.scrollTo({ top: y, behavior: "smooth" });
+}} className="group flex-1 text-black px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 animate-button-1"
                 style={{ background: "linear-gradient(135deg, #c9a44a, #ddb95a, #e8cc7a)" }}>
                 Book Now
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:translate-x-1 transition-transform">
