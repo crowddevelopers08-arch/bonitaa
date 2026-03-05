@@ -369,65 +369,6 @@ export default function TransformationsSection() {
                           {t.tag}
                         </span>
                       </div>
-
-                      {/* Sessions badge - visible on all screens */}
-                      <div className="absolute bottom-3 left-3 z-10">
-                        <span
-                          className="px-2.5 py-1 rounded-full text-xs font-bold"
-                          style={{
-                            background: "rgba(8,11,18,0.85)",
-                            border: "1px solid rgba(221,185,90,0.3)",
-                            color: "#ddb95a",
-                            fontSize: 9,
-                          }}
-                        >
-                          {t.sessions}
-                        </span>
-                      </div>
-
-                      {/* Featured star badge */}
-                      {t.featured && (
-                        <div className="absolute top-3 right-3 z-10">
-                          <span
-                            className="px-2 py-0.5 rounded-full font-bold"
-                            style={{
-                              background: "rgba(221,185,90,0.15)",
-                              border: "1px solid rgba(221,185,90,0.4)",
-                              color: "#ddb95a",
-                              fontSize: 9,
-                            }}
-                          >
-                            ★
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Treatment name overlay at bottom - visible on mobile */}
-                      {isMobile && (
-                        <div className="absolute bottom-3 right-3 z-10">
-                          <h3
-                            className="font-bold text-right"
-                            style={{
-                              color: "rgba(240,232,213,0.95)",
-                              fontFamily: "'Playfair Display',serif",
-                              fontSize: "clamp(16px,4vw,18px)",
-                              textShadow: "0 2px 4px rgba(0,0,0,0.5)",
-                            }}
-                          >
-                            {t.treatment}
-                          </h3>
-                          <p
-                            style={{
-                              color: "rgba(221,185,90,0.9)",
-                              fontSize: "clamp(11px,3vw,12px)",
-                              textAlign: "right",
-                              textShadow: "0 1px 2px rgba(0,0,0,0.5)",
-                            }}
-                          >
-                            {t.result}
-                          </p>
-                        </div>
-                      )}
                     </div>
 
                     {/* Card content - only visible on desktop */}
