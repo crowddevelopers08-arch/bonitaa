@@ -6,6 +6,7 @@ import HairSolutions from "@/component/hairsolutions";
 import MobileActionBar from "@/component/mobile-bar";
 import Navbar from "@/component/navbar";
 import ReviewsSection from "@/component/reviewsection";
+import TransformationsSection from "@/component/transformationssection";
 import TreatmentsSection from "@/component/treatmentssection";
 import WhyBonitaa from "@/component/whybonita";
 import Image from "next/image";
@@ -17,6 +18,7 @@ export default function Home() {
     <HeroBanner />
     <AppointmentSection />
     <WhyBonitaa />
+    <TransformationsSection />
     <TreatmentsSection />
     <HairSolutions />
     <ReviewsSection />

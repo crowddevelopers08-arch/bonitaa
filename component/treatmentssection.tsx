@@ -241,7 +241,7 @@ export default function TreatmentsSection() {
 
         <div className="w-full h-px" style={{ background:"linear-gradient(90deg,transparent,#ddb95a,transparent)" }}/>
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-16 sm:py-24">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-5 sm:py-10">
 
           <div className="text-center mb-14">
             <Reveal dir="down" delay={0.0} className="mb-4">
@@ -276,7 +276,10 @@ export default function TreatmentsSection() {
           </div>
 
           <Reveal dir="up" delay={0.5} className="mt-14 flex justify-center">
-            <button className="btn-gold flex items-center gap-2">
+            <button className="btn-gold flex items-center gap-2"   onClick={() => {
+    document.getElementById("Form")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="4" width="18" height="18" rx="2"/>
                 <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>

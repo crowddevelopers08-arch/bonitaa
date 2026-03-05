@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import DarkBackground from "@/component/bg";
+import PopupAd from "@/component/popadds";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${outfit.variable} antialiased`}>
         <DarkBackground />
+        <PopupAd />
         {children}
       </body>
     </html>

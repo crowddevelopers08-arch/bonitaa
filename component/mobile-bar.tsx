@@ -29,6 +29,10 @@ export default function MobileActionBar() {
 
       {/* Book Now */}
       <button
+        onClick={() => {
+    document.getElementById("Form")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }}
         className="
           flex-1 flex items-center justify-center gap-2
           py-4 font-semibold

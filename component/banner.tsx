@@ -1,7 +1,6 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { CountUp, Reveal, Stagger } from "./animation";
-// import { Reveal, CountUp, Stagger } from "./animations";
+import { useEffect, useRef, useState } from "react";
+import { Reveal, CountUp, Stagger } from "../component/animation";
 
 const features = [
   "Natural Hairline Design",
@@ -15,6 +14,16 @@ const statsConfig = [
   { to:5,   suffix:"K+", label:"Happy Customers",     dir:"down"  },
   { to:4.8, suffix:"",   label:"Google Rating",       dir:"right", decimals:1 },
 ] as const;
+
+// ── 3 hero images ──
+const heroImages = [
+  "/before1.webp",
+  "/before2.webp",
+  "/before5.webp",
+];
+
+const SCAN_DURATION  = 3500;  // ms for one full scan (top → bottom)
+const FADE_DURATION  =  500;  // ms cross-fade between images
 
 const CheckIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="flex-shrink-0">
@@ -33,6 +42,33 @@ const CalendarIcon = () => (
 export default function HeroBanner() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // ── image cycling state ──
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [nextIdx,    setNextIdx]    = useState(1);
+  const [fading,     setFading]     = useState(false);
+  const [scanKey,    setScanKey]    = useState(0); // re-triggers CSS animation
+
+  useEffect(() => {
+    // After every scan cycle, cross-fade to the next image then restart the scan
+    const cycle = setInterval(() => {
+      setFading(true);
+
+      setTimeout(() => {
+        setCurrentIdx(prev => {
+          const next = (prev + 1) % heroImages.length;
+          setNextIdx((next + 1) % heroImages.length);
+          return next;
+        });
+        setFading(false);
+        setScanKey(k => k + 1); // restart scan-line animation
+      }, FADE_DURATION);
+
+    }, SCAN_DURATION + FADE_DURATION);
+
+    return () => clearInterval(cycle);
+  }, []);
+
+  // ── particles ──
   useEffect(() => {
     const canvas = canvasRef.current; if (!canvas) return;
     const ctx = canvas.getContext("2d")!;
@@ -70,7 +106,6 @@ export default function HeroBanner() {
         @keyframes pulseGold { 0%,100%{box-shadow:0 0 0 0 rgba(221,185,90,0.4)} 50%{box-shadow:0 0 0 14px rgba(221,185,90,0)} }
         @keyframes shimmer   { from{transform:translateX(-100%)} to{transform:translateX(100%)} }
         @keyframes scanline  { 0%{top:0%;opacity:1} 90%{top:100%;opacity:1} 100%{top:100%;opacity:0} }
-        @keyframes progFill  { from{width:0%} to{width:92%} }
         @keyframes floatA    { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-7px)} }
         @keyframes floatB    { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-9px)} }
         @keyframes glowPulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
@@ -79,11 +114,36 @@ export default function HeroBanner() {
         .float-a       { animation: floatA 4s ease-in-out infinite; }
         .float-b       { animation: floatB 5s ease-in-out 0.8s infinite; }
         .glow-dot      { animation: glowPulse 2s ease-in-out infinite; }
-        .scan-line     { position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(221,185,90,0.75),transparent);animation:scanline 3.5s ease-in-out infinite;pointer-events:none;z-index:5; }
-        .progress-bar  { animation:progFill 2s ease 1.2s forwards; width:0%; }
+
+        .scan-line {
+          position:absolute;
+          left:0;right:0;
+          height:2px;
+          background:linear-gradient(90deg,transparent,rgba(221,185,90,0.75),transparent);
+          animation:scanline var(--scan-dur, 3.5s) ease-in-out forwards;
+          pointer-events:none;
+          z-index:5;
+        }
 
         .shimmer-btn::after { content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent);transform:translateX(-100%); }
         .shimmer-btn:hover::after { animation:shimmer 0.65s ease forwards; }
+
+        .hero-img {
+          position:absolute;
+          inset:0;
+          width:100%;
+          height:100%;
+          object-fit:cover;
+          filter:brightness(0.87) contrast(1.1) saturate(0.9);
+          transition: opacity var(--fade-dur, 0.5s) ease;
+        }
+      `}</style>
+
+      <style>{`
+        :root {
+          --scan-dur:  ${SCAN_DURATION}ms;
+          --fade-dur:  ${FADE_DURATION}ms;
+        }
       `}</style>
 
       <section className="relative w-full overflow-hidden" style={{ background:"#080b12", fontFamily:"'Outfit',sans-serif" }}>
@@ -147,7 +207,10 @@ export default function HeroBanner() {
               {/* CTA buttons → from UP */}
               <Reveal dir="up" delay={0.55}>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-                  <button
+                  <button   onClick={() => {
+    document.getElementById("Form")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }}
                     className="shimmer-btn btn-glow relative overflow-hidden flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-xl font-semibold transition-all duration-300"
                     style={{ background:"#ddb95a", color:"#080b12", fontSize:14, letterSpacing:"0.03em" }}
                     onMouseEnter={e=>(e.currentTarget.style.background="#c9a44a")}
@@ -177,90 +240,31 @@ export default function HeroBanner() {
               <div className="absolute pointer-events-none" style={{ inset:0,top:24,left:22,right:-14,bottom:-14,borderRadius:24,transform:"rotate(3deg)",background:"rgba(221,185,90,0.05)",border:"1px solid rgba(221,185,90,0.1)",zIndex:1 }}/>
               <div className="absolute pointer-events-none" style={{ inset:0,top:12,left:11,right:-7,bottom:-7,borderRadius:22,transform:"rotate(1.5deg)",background:"rgba(221,185,90,0.03)",border:"1px solid rgba(221,185,90,0.16)",zIndex:2 }}/>
 
-              {/* Main card */}
-              <div className="relative overflow-visible" style={{ borderRadius:20, border:"1.5px solid rgba(221,185,90,0.4)", background:"#0c0f1a", boxShadow:"0 40px 100px rgba(0,0,0,0.55),0 0 50px rgba(221,185,90,0.09)", zIndex:3 }}>
+              {/* Main card — 3-image cycling with scan line */}
+              <div className="relative overflow-hidden" style={{ borderRadius:20, border:"1.5px solid rgba(221,185,90,0.4)", background:"#0c0f1a", boxShadow:"0 40px 100px rgba(0,0,0,0.55),0 0 50px rgba(221,185,90,0.09)", zIndex:3, height:"clamp(300px,42vw,480px)" }}>
 
-                {/* Header */}
-                <div className="flex items-center justify-between px-4 py-2.5" style={{ background:"linear-gradient(90deg,rgba(221,185,90,0.09),rgba(221,185,90,0.03))", borderBottom:"1px solid rgba(221,185,90,0.18)" }}>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full glow-dot" style={{ background:"#ddb95a" }}/>
-                    <span className="font-bold tracking-widest" style={{ color:"rgba(221,185,90,0.75)", fontSize:10 }}>BONITAA HAIR CLINIC</span>
-                  </div>
-                  <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full" style={{ background:"rgba(74,222,128,0.1)", border:"1px solid rgba(74,222,128,0.3)" }}>
-                    <div className="w-1.5 h-1.5 rounded-full" style={{ background:"#4ade80", boxShadow:"0 0 5px #4ade80" }}/>
-                    <span className="font-semibold" style={{ color:"#4ade80", fontSize:10 }}>Open Now</span>
-                  </div>
-                </div>
+                {/* Current image (always visible) */}
+                <img
+                  src={heroImages[currentIdx]}
+                  alt="Hair Treatment"
+                  className="hero-img"
+                  style={{ opacity: fading ? 0 : 1, zIndex: 1 }}
+                />
 
-                {/* Image */}
-                <div className="relative overflow-hidden" style={{ height:"clamp(200px,35vw,280px)" }}>
-                  <img src="/hero-image.png" alt="Hair Treatment" className="w-full h-full object-cover" style={{ filter:"brightness(0.87) contrast(1.1) saturate(0.9)" }}/>
-                  <div className="scan-line"/>
-                  <div className="absolute inset-0 pointer-events-none" style={{ background:"linear-gradient(to top,#0c0f1a 0%,rgba(12,15,26,0.35) 40%,transparent 70%)" }}/>
-                  <div className="absolute inset-y-0 left-0 w-1 pointer-events-none" style={{ background:"linear-gradient(to bottom,transparent,#ddb95a,transparent)", opacity:0.4 }}/>
-                  <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background:"rgba(8,11,18,0.82)", border:"1px solid rgba(221,185,90,0.4)", backdropFilter:"blur(8px)" }}>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#ddb95a"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
-                    <span className="font-bold" style={{ color:"#ddb95a", fontSize:10 }}>Advanced FUE</span>
-                  </div>
-                  <div className="absolute top-3 right-3 flex flex-col items-center gap-0.5 px-2.5 py-1.5 rounded-xl" style={{ background:"rgba(8,11,18,0.82)", border:"1px solid rgba(221,185,90,0.4)", backdropFilter:"blur(8px)" }}>
-                    <span className="font-black leading-none" style={{ color:"#ddb95a", fontFamily:"'Playfair Display',serif", fontSize:15 }}>4.8</span>
-                    <div className="flex gap-0.5">
-                      {[...Array(5)].map((_,i)=>(<svg key={i} width="8" height="8" viewBox="0 0 24 24" fill="#ddb95a"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>))}
-                    </div>
-                    <span style={{ color:"rgba(221,185,90,0.5)", fontSize:9 }}>Google</span>
-                  </div>
-                </div>
+                {/* Next image (pre-loaded behind, fades in) */}
+                <img
+                  src={heroImages[nextIdx]}
+                  alt="Hair Treatment"
+                  className="hero-img"
+                  style={{ opacity: fading ? 1 : 0, zIndex: 2 }}
+                />
 
-                {/* Progress */}
-                <div className="px-4 pt-4 pb-2">
-                  <div className="flex items-center justify-between mb-2">
-                    <span style={{ color:"rgba(221,185,90,0.6)", fontSize:10, fontWeight:600, letterSpacing:"0.08em" }}>TREATMENT SUCCESS RATE</span>
-                    <span style={{ color:"#ddb95a", fontSize:11, fontWeight:900 }}>92%</span>
-                  </div>
-                  <div className="w-full rounded-full overflow-hidden" style={{ height:4, background:"rgba(221,185,90,0.1)" }}>
-                    <div className="h-full rounded-full progress-bar" style={{ background:"linear-gradient(90deg,rgba(221,185,90,0.5),#ddb95a)", boxShadow:"0 0 8px rgba(221,185,90,0.5)" }}/>
-                  </div>
-                </div>
+                {/* Scan line — key forces restart on each cycle */}
+                <div key={scanKey} className="scan-line" style={{ zIndex: 5 }}/>
 
-                {/* Bottom */}
-                <div className="flex items-center justify-between px-4 py-3" style={{ borderTop:"1px solid rgba(221,185,90,0.1)", background:"rgba(221,185,90,0.03)" }}>
-                  <div>
-                    <p className="font-bold text-sm" style={{ color:"#f0e8d5" }}>Bonitaa Skin & Hair</p>
-                    <p style={{ color:"rgba(221,185,90,0.5)", fontSize:11 }}>Coimbatore, Tamil Nadu</p>
-                  </div>
-                  <div className="flex -space-x-1.5">
-                    {["#c9a44a","#ddb95a","#e8cc7a"].map((c,i)=>(<div key={i} className="w-6 h-6 rounded-full flex items-center justify-center font-bold" style={{ background:c, color:"#080b12", border:"2px solid #0c0f1a", fontSize:7 }}>{["5K","+","★"][i]}</div>))}
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center font-semibold" style={{ background:"rgba(221,185,90,0.1)", border:"2px solid rgba(221,185,90,0.3)", color:"#ddb95a", fontSize:7 }}>+99</div>
-                  </div>
-                </div>
-              </div>
 
-              {/* Float badges */}
-              <div className="float-a absolute hidden sm:flex items-center gap-2.5 px-4 py-2.5 rounded-2xl" style={{ bottom:-14, left:-24, zIndex:10, background:"linear-gradient(135deg,#ddb95a,#c9a44a)", boxShadow:"0 10px 35px rgba(221,185,90,0.4)" }}>
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background:"rgba(8,11,18,0.25)" }}><span style={{ fontSize:16 }}>🏆</span></div>
-                <div>
-                  <p className="font-black leading-none" style={{ color:"#080b12", fontFamily:"'Playfair Display',serif", fontSize:16 }}>15+</p>
-                  <p className="font-bold" style={{ color:"rgba(8,11,18,0.7)", fontSize:10 }}>Years Expert</p>
-                </div>
-              </div>
-              <div className="float-b absolute hidden sm:flex items-center gap-2 px-3 py-2.5 rounded-2xl" style={{ top:40, left:-32, zIndex:10, background:"rgba(8,11,18,0.92)", border:"1.5px solid rgba(221,185,90,0.4)", backdropFilter:"blur(12px)", boxShadow:"0 8px 35px rgba(0,0,0,0.45)" }}>
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background:"rgba(221,185,90,0.1)", border:"1px solid rgba(221,185,90,0.25)" }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ddb95a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
-                </div>
-                <div>
-                  <p className="font-black leading-none" style={{ color:"#ddb95a", fontFamily:"'Playfair Display',serif", fontSize:15 }}>6+</p>
-                  <p className="font-medium" style={{ color:"rgba(240,232,213,0.5)", fontSize:10 }}>Branches</p>
-                </div>
-              </div>
-
-              {/* Mobile pills */}
-              <div className="flex sm:hidden items-center justify-center gap-3 mt-4 flex-wrap">
-                {[{v:"15+",l:"Years"},{v:"6+",l:"Branches"},{v:"5K+",l:"Patients"}].map((s,i)=>(
-                  <div key={i} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full" style={{ background:"rgba(221,185,90,0.08)", border:"1px solid rgba(221,185,90,0.25)" }}>
-                    <span className="font-black" style={{ color:"#ddb95a", fontSize:13, fontFamily:"'Playfair Display',serif" }}>{s.v}</span>
-                    <span style={{ color:"rgba(240,232,213,0.55)", fontSize:11 }}>{s.l}</span>
-                  </div>
-                ))}
+                <div className="absolute inset-0 pointer-events-none" style={{ background:"linear-gradient(to top,rgba(8,11,18,0.4) 0%,transparent 50%)", zIndex: 4 }}/>
+                <div className="absolute inset-y-0 left-0 w-1 pointer-events-none" style={{ background:"linear-gradient(to bottom,transparent,#ddb95a,transparent)", opacity:0.4, zIndex: 4 }}/>
               </div>
 
               {/* Brackets */}
@@ -272,6 +276,10 @@ export default function HeroBanner() {
               </div>
               <div className="absolute pointer-events-none" style={{ bottom:-5,right:-5,zIndex:11 }}>
                 <div style={{ width:2,height:20,background:"#ddb95a",borderRadius:2,marginLeft:"auto" }}/><div style={{ width:20,height:2,background:"#ddb95a",borderRadius:2,marginLeft:"auto" }}/>
+              </div>
+              <div className="absolute pointer-events-none" style={{ bottom:-5, left:-5, zIndex:11 }}>
+                <div style={{ width:2, height:20, background:"#ddb95a", borderRadius:2 }} />
+                <div style={{ width:20, height:2, background:"#ddb95a", borderRadius:2 }} />
               </div>
             </Reveal>
 
@@ -289,7 +297,6 @@ export default function HeroBanner() {
                   </div>
                   <div>
                     <p className="font-bold leading-none" style={{ color:"#ddb95a", fontFamily:"'Playfair Display',serif", fontSize:"clamp(16px,2.5vw,22px)" }}>
-                      {/* CountUp → runs when scrolled into view */}
                       <CountUp to={s.to} suffix={s.suffix} decimals={"decimals" in s ? s.decimals : 0} duration={1800} delay={i * 120}/>
                     </p>
                     <p className="mt-0.5 font-medium" style={{ color:"rgba(240,232,213,0.55)", fontSize:"clamp(10px,1.2vw,12px)" }}>{s.label}</p>

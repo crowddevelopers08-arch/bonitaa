@@ -16,9 +16,11 @@ const fields = [
   { name:"fullName", placeholder:"Please Provide Your Full Name",       type:"text",  icon:<UserIcon/>,  dir:"left"  },
   { name:"phone",    placeholder:"Please Fill Your 10 Digit Phone No.", type:"tel",   icon:<PhoneIcon/>, dir:"right" },
   { name:"email",    placeholder:"Example@gmail.com",                   type:"email", icon:<MailIcon/>,  dir:"left"  },
-  { name:"concern",  placeholder:"Mention Your Hair Concern",           type:"text",  icon:<ChatIcon/>,  dir:"right" },
-  { name:"pincode",  placeholder:"Type 6 Digit Your Pincode Here",      type:"text",  icon:<PinIcon/>,   dir:"left"  },
-] as const;
+  { name:"concern",  placeholder:"Select Your Nearest Branch",           type:"select", icon:<PinIcon/>,  dir:"right",
+    options:["Coimbatore", "Chennai", "Bangalore", "Madurai"]
+  },
+  { name:"pincode",  placeholder:"Type 6 Digit Your Pincode Here",      type:"text",  icon:<ChatIcon/>,   dir:"left"  },
+] satisfies { name:string; placeholder:string; type:string; icon:JSX.Element; dir:"left"|"right"; options?:string[] }[];
 
 const badges = [
   { icon:"🏆", to:15,   suffix:"+",  sub:"Years of Excellence"    },
@@ -101,6 +103,7 @@ export default function AppointmentSection() {
           font-family:'Outfit',sans-serif; caret-color:#ddb95a;
         }
         .appt-input::placeholder { color:rgba(221,185,90,0.3); }
+        .appt-input option        { background:#0c0f1a; color:#f0e8d5; }
         .appt-input:focus {
           border-color:#ddb95a; background:rgba(221,185,90,0.07);
           box-shadow:0 0 0 3px rgba(221,185,90,0.12),0 4px 20px rgba(221,185,90,0.08);
@@ -156,7 +159,6 @@ export default function AppointmentSection() {
             {/* ═══════════ LEFT ═══════════ */}
             <div className="flex-1 w-full">
 
-              {/* Eyebrow → from TOP ↓ */}
               <Reveal dir="down" delay={0.0} className="mb-6">
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full" style={{ border:"1px solid rgba(221,185,90,0.32)",background:"rgba(221,185,90,0.06)" }}>
                   <div className="w-2 h-2 rounded-full glow-dot" style={{ background:"#ddb95a" }}/>
@@ -164,21 +166,18 @@ export default function AppointmentSection() {
                 </div>
               </Reveal>
 
-              {/* H2 line 1 → from LEFT ← */}
               <Reveal dir="left" delay={0.1}>
                 <h2 className="leading-tight mb-1" style={{ fontFamily:"'Playfair Display',serif",fontSize:"clamp(1.5rem,3vw,2.4rem)",color:"rgba(240,232,213,0.9)",fontWeight:700 }}>
                   Regain Your Confidence
                 </h2>
               </Reveal>
 
-              {/* H2 line 2 → from RIGHT → */}
               <Reveal dir="right" delay={0.18} className="mb-6">
                 <h2 className="leading-tight" style={{ fontFamily:"'Playfair Display',serif",fontSize:"clamp(1.5rem,3vw,2.4rem)",color:"#ddb95a",fontWeight:800 }}>
                   With Expert Hair Care
                 </h2>
               </Reveal>
 
-              {/* Divider → from UP ↑ */}
               <Reveal dir="up" delay={0.26} className="mb-7">
                 <div className="flex items-center gap-3">
                   <div className="h-px w-10" style={{ background:"#ddb95a" }}/>
@@ -189,7 +188,6 @@ export default function AppointmentSection() {
                 </div>
               </Reveal>
 
-              {/* Description block → from LEFT ← */}
               <Reveal dir="left" delay={0.34} className="mb-8">
                 <div className="flex gap-4">
                   <div className="flex-shrink-0 w-0.5 rounded-full self-stretch" style={{ background:"linear-gradient(to bottom,#ddb95a,rgba(221,185,90,0.1))" }}/>
@@ -206,7 +204,6 @@ export default function AppointmentSection() {
                 </div>
               </Reveal>
 
-              {/* Trust badges → stagger UP ↑ one by one */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {badges.map((b, i) => (
                   <Reveal key={i} dir="up" delay={0.42 + i * 0.12}>
@@ -225,7 +222,6 @@ export default function AppointmentSection() {
                 ))}
               </div>
 
-              {/* Accent chips → from DOWN ↓ */}
               <Reveal dir="down" delay={0.72} className="hidden lg:flex items-center gap-3 mt-8">
                 <div className="float-a flex items-center gap-2 px-3.5 py-2 rounded-full" style={{ background:"rgba(221,185,90,0.08)",border:"1px solid rgba(221,185,90,0.25)" }}>
                   <div className="w-1.5 h-1.5 rounded-full" style={{ background:"#4ade80",boxShadow:"0 0 5px #4ade80" }}/>
@@ -238,19 +234,16 @@ export default function AppointmentSection() {
               </Reveal>
             </div>
 
-            {/* ═══════════ RIGHT — FORM → from RIGHT → ═══════════ */}
+            {/* ═══════════ RIGHT — FORM ═══════════ */}
             <Reveal dir="right" delay={0.15} className="w-full lg:w-auto flex-shrink-0 relative" style={{ minWidth:"clamp(280px,44vw,490px)" }}>
 
-              {/* Depth shadow cards */}
               <div className="absolute pointer-events-none" style={{ top:20,left:18,right:-14,bottom:-14,borderRadius:24,transform:"rotate(2.5deg)",background:"rgba(221,185,90,0.04)",border:"1px solid rgba(221,185,90,0.1)",zIndex:0 }}/>
               <div className="absolute pointer-events-none" style={{ top:10,left:9,right:-7,bottom:-7,borderRadius:22,transform:"rotate(1.2deg)",background:"rgba(221,185,90,0.03)",border:"1px solid rgba(221,185,90,0.14)",zIndex:0 }}/>
 
-              {/* Main card */}
-              <div className="relative overflow-hidden rounded-2xl" style={{ background:"rgba(10,13,22,0.95)",border:"1.5px solid rgba(221,185,90,0.3)",boxShadow:"0 40px 100px rgba(0,0,0,0.55),0 0 50px rgba(221,185,90,0.08)",zIndex:1 }}>
+              <div id="Form" className="relative overflow-hidden rounded-2xl" style={{ background:"rgba(10,13,22,0.95)",border:"1.5px solid rgba(221,185,90,0.3)",boxShadow:"0 40px 100px rgba(0,0,0,0.55),0 0 50px rgba(221,185,90,0.08)",zIndex:1 }}>
 
                 <div className="h-0.5 w-full" style={{ background:"linear-gradient(90deg,transparent,#ddb95a,transparent)" }}/>
 
-                {/* Card header */}
                 <div className="flex items-center justify-between px-6 py-3" style={{ background:"linear-gradient(90deg,rgba(221,185,90,0.09),rgba(221,185,90,0.03))",borderBottom:"1px solid rgba(221,185,90,0.15)" }}>
                   <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full glow-dot" style={{ background:"#ddb95a" }}/>
@@ -264,7 +257,6 @@ export default function AppointmentSection() {
 
                 <div className="px-6 sm:px-8 pt-7 pb-8">
 
-                  {/* Form title → from UP ↑ */}
                   <Reveal dir="up" delay={0.25} className="mb-7">
                     <div className="flex items-center gap-3">
                       <div className="divider-line"/>
@@ -290,22 +282,45 @@ export default function AppointmentSection() {
                   ) : (
                     <div className="flex flex-col gap-4">
 
-                      {/* Fields → alternate LEFT / RIGHT one by one */}
                       {fields.map((f, i) => (
                         <Reveal key={f.name} dir={f.dir} delay={0.32 + i * 0.09}>
                           <div className="relative">
                             <span className="field-icon" style={{ color:errors[f.name]?"rgba(240,80,80,0.7)":focused===f.name?"#ddb95a":"rgba(221,185,90,0.4)" }}>
                               {f.icon}
                             </span>
-                            <input
-                              type={f.type}
-                              placeholder={f.placeholder}
-                              value={formData[f.name]||""}
-                              onChange={e=>handleChange(f.name,e.target.value)}
-                              onFocus={()=>setFocused(f.name)}
-                              onBlur={()=>setFocused(null)}
-                              className={["appt-input",errors[f.name]?"err":"",!errors[f.name]&&formData[f.name]?.trim()?"filled":""].join(" ")}
-                            />
+                            {f.type === "select" ? (
+                              <>
+                                <select
+                                  value={formData[f.name]||""}
+                                  onChange={e=>handleChange(f.name,e.target.value)}
+                                  onFocus={()=>setFocused(f.name)}
+                                  onBlur={()=>setFocused(null)}
+                                  className={["appt-input",errors[f.name]?"err":"",!errors[f.name]&&formData[f.name]?.trim()?"filled":""].join(" ")}
+                                  style={{ appearance:"none", cursor:"pointer", paddingRight:40 }}
+                                >
+                                  <option value="" style={{ background:"#0c0f1a", color:"rgba(240,232,213,0.4)" }}>{f.placeholder}</option>
+                                  {f.options?.map(opt => (
+                                    <option key={opt} value={opt} style={{ background:"#0c0f1a", color:"#f0e8d5" }}>{opt}</option>
+                                  ))}
+                                </select>
+                                {/* Chevron icon */}
+                                <span className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
+                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={focused===f.name?"#ddb95a":"rgba(221,185,90,0.4)"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                  </svg>
+                                </span>
+                              </>
+                            ) : (
+                              <input
+                                type={f.type}
+                                placeholder={f.placeholder}
+                                value={formData[f.name]||""}
+                                onChange={e=>handleChange(f.name,e.target.value)}
+                                onFocus={()=>setFocused(f.name)}
+                                onBlur={()=>setFocused(null)}
+                                className={["appt-input",errors[f.name]?"err":"",!errors[f.name]&&formData[f.name]?.trim()?"filled":""].join(" ")}
+                              />
+                            )}
                             {formData[f.name]?.trim() && !errors[f.name] && (
                               <span className="absolute right-3.5 top-1/2 -translate-y-1/2">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ddb95a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20,6 9,17 4,12"/></svg>
@@ -321,7 +336,6 @@ export default function AppointmentSection() {
                         </Reveal>
                       ))}
 
-                      {/* Button → from UP ↑ */}
                       <Reveal dir="up" delay={0.78} className="pt-3">
                         <button className="book-btn" onClick={handleSubmit} disabled={loading}>
                           {loading
@@ -331,7 +345,6 @@ export default function AppointmentSection() {
                         </button>
                       </Reveal>
 
-                      {/* Privacy → from DOWN ↓ */}
                       <Reveal dir="down" delay={0.88}>
                         <p className="text-center pt-1" style={{ color:"rgba(221,185,90,0.3)",fontSize:11 }}>
                           🔒 Your information is 100% safe &amp; confidential

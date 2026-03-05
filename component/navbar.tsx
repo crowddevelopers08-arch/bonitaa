@@ -107,7 +107,7 @@ const Navbar = () => {
                   style={{ background: "#ddb95a" }}
                 ></div>
                 <a
-                  href="#contact"
+                  href="#Form"
                   className="flex relative text-white px-6 py-3 rounded-full text-base font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 group"
                   style={{
                     background: "#ddb95a",
@@ -182,7 +182,7 @@ const Navbar = () => {
                   style={{ background: "#ddb95a" }}
                 ></div>
                 <a
-                  href="#contact"
+                  href="#Form"
                   className="flex relative px-6 py-3 rounded-full text-base font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 group"
                   style={{
                     background: "#ddb95a",
