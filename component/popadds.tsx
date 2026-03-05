@@ -29,7 +29,7 @@ export default function PopupAd() {
       />
 
       {/* Popup Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none mt-25">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none max-sm:mt-30 mt-25">
         <div 
           className="relative rounded-3xl shadow-2xl max-w-md w-full pointer-events-auto transform transition-all duration-300 animate-popup"
           style={{ background: "#080b12" }}
