@@ -112,7 +112,7 @@ export default function PopupAd() {
               Start your journey to parenthood with expert guidance. Book a free consultation and get a personalized treatment plan.
             </p>
 
-            {/* Features — styled matching button design language */}
+            {/* Features */}
             <div className="flex flex-col gap-2 mb-5 sm:mb-6">
               {features.map((text, i) => (
                 <div
@@ -124,7 +124,6 @@ export default function PopupAd() {
                     clipPath: "polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)",
                   }}
                 >
-                  {/* Diamond tick — matches WalkthroughButton clipPath aesthetic */}
                   <div
                     style={{
                       flexShrink: 0,
@@ -157,7 +156,7 @@ export default function PopupAd() {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex sm:flex-row gap-2 sm:gap-3">
+            <div className="flex sm:flex-row gap-2 sm:gap-3 animate-popup">
               <WalkthroughButton label="Book Now" href="#Form" />
               <GhostGoldButton onClick={handleClose} label="Maybe Later" />
             </div>
@@ -194,15 +193,15 @@ export default function PopupAd() {
           100% { opacity: 1; transform: rotate(0deg) scale(1); }
         }
 
-        .animate-popup       { animation: popup 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-        .animate-badge       { animation: fadeInUp 0.6s ease-out 0.3s both; }
-        .animate-heading     { animation: fadeInUp 0.6s ease-out 0.45s both; }
-        .animate-description { animation: fadeInUp 0.6s ease-out 0.6s both; }
-        .animate-feature-1   { animation: fadeInLeft 0.5s ease-out 0.75s both; }
-        .animate-feature-2   { animation: fadeInLeft 0.5s ease-out 0.9s both; }
-        .animate-feature-3   { animation: fadeInLeft 0.5s ease-out 1.05s both; }
-        .animate-footer      { animation: fadeInUp 0.5s ease-out 1.5s both; }
-        .animate-close-btn   { animation: rotateIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both; }
+        .animate-popup       { animation: popup      0.5s  cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .animate-close-btn   { animation: rotateIn   0.5s  cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s  both; }
+        .animate-badge       { animation: fadeInUp   0.5s  ease-out 0.5s  both; }
+        .animate-heading     { animation: fadeInUp   0.5s  ease-out 0.8s  both; }
+        .animate-description { animation: fadeInUp   0.5s  ease-out 1.1s  both; }
+        .animate-feature-1   { animation: fadeInLeft 0.5s  ease-out 1.4s  both; }
+        .animate-feature-2   { animation: fadeInLeft 0.5s  ease-out 1.7s  both; }
+        .animate-feature-3   { animation: fadeInLeft 0.5s  ease-out 2.0s  both; }
+        .animate-footer      { animation: fadeInUp   0.5s  ease-out 2.3s  both; }
       `}</style>
     </>
   );
