@@ -59,7 +59,7 @@ export default function PrivacyPolicy() {
       `}</style>
 
       <main className="relative w-full overflow-hidden min-h-screen"
-        style={{ background:"#080b12", fontFamily:"'Outfit',sans-serif" }}>
+        style={{fontFamily:"'Outfit',sans-serif" }}>
 
         {/* Orbs */}
         <div className="absolute pointer-events-none" style={{ width:"clamp(300px,38vw,520px)",height:"clamp(300px,38vw,520px)",top:"-10%",left:"-6%",background:"radial-gradient(circle,rgba(221,185,90,0.09) 0%,transparent 70%)",filter:"blur(90px)",borderRadius:"50%",zIndex:0 }}/>
@@ -67,7 +67,7 @@ export default function PrivacyPolicy() {
 
         <div className="w-full h-px" style={{ background:"linear-gradient(90deg,transparent,#ddb95a,transparent)" }}/>
 
-        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-10">
 
           {/* Header */}
           <div className="text-center mb-12 fade-up">

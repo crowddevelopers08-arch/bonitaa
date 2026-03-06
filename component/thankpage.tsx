@@ -24,7 +24,7 @@ export default function ThankYouPage() {
       `}</style>
 
       <main className="relative w-full flex items-center justify-center overflow-hidden"
-        style={{ background:"#080b12", fontFamily:"'Outfit',sans-serif" }}>
+        style={{fontFamily:"'Outfit',sans-serif" }}>
 
         {/* Ambient orbs */}
         <div className="absolute pointer-events-none" style={{ width:"clamp(320px,40vw,560px)",height:"clamp(320px,40vw,560px)",top:"50%",left:"50%",transform:"translate(-50%,-50%)",background:"radial-gradient(circle,rgba(221,185,90,0.1) 0%,transparent 65%)",filter:"blur(80px)",borderRadius:"50%" }}/>
