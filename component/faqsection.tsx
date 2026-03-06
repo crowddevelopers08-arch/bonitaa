@@ -33,7 +33,7 @@ export default function FaqSection() {
         .btn-gold:hover::after { animation:shimmer 0.55s ease forwards; }
       `}</style>
 
-      <section className="relative w-full overflow-hidden" style={{ background:"#080b12", fontFamily:"'Outfit',sans-serif" }}>
+      <section id="faq" className="relative w-full overflow-hidden" style={{ background:"#080b12", fontFamily:"'Outfit',sans-serif" }}>
         <div className="absolute pointer-events-none z-0" style={{ width:"clamp(300px,36vw,480px)",height:"clamp(300px,36vw,480px)",top:"-12%",left:"-8%",background:"radial-gradient(circle,rgba(221,185,90,0.09) 0%,transparent 70%)",filter:"blur(90px)",borderRadius:"50%" }}/>
         <div className="absolute pointer-events-none z-0" style={{ width:"clamp(240px,30vw,400px)",height:"clamp(240px,30vw,400px)",bottom:"-10%",right:"-4%",background:"radial-gradient(circle,rgba(221,185,90,0.08) 0%,transparent 70%)",filter:"blur(75px)",borderRadius:"50%" }}/>
         <div className="w-full h-px" style={{ background:"linear-gradient(90deg,transparent,#ddb95a,transparent)" }}/>

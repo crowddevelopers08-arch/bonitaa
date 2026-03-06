@@ -356,37 +356,6 @@ export default function TransformationsSection() {
                         }}
                       />
                     </div>
-
-                    {/* Card content - only visible on desktop */}
-                    {!isMobile && (
-                      <div className="p-4">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3
-                            className="font-bold leading-tight"
-                            style={{
-                              color: "rgba(240,232,213,0.9)",
-                              fontFamily: "'Playfair Display',serif",
-                              fontSize: "clamp(14px,1.4vw,16px)",
-                            }}
-                          >
-                            {t.treatment}
-                          </h3>
-                        </div>
-                        <div
-                          className="w-8 h-0.5 mb-2 rounded-full"
-                          style={{ background: "rgba(221,185,90,0.3)" }}
-                        />
-                        <p
-                          style={{
-                            color: "rgba(240,232,213,0.55)",
-                            fontSize: "clamp(11px,1vw,13px)",
-                            lineHeight: 1.6,
-                          }}
-                        >
-                          {t.result}
-                        </p>
-                      </div>
-                    )}
                   </div>
                 ))}
               </div>

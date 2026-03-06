@@ -45,7 +45,7 @@ export default function HairSolutions() {
         .btn-ghost:hover { background:rgba(221,185,90,0.07); border-color:#ddb95a; transform:translateY(-2px); }
       `}</style>
 
-      <section className="relative w-full overflow-hidden" style={{ background:"#080b12", fontFamily:"'Outfit',sans-serif" }}>
+      <section id="treatment" className="relative w-full overflow-hidden" style={{ background:"#080b12", fontFamily:"'Outfit',sans-serif" }}>
 
         {/* Orbs */}
         <div className="absolute pointer-events-none z-0" style={{ width:"clamp(300px,38vw,500px)",height:"clamp(300px,38vw,500px)",top:"-10%",left:"-6%",background:"radial-gradient(circle,rgba(221,185,90,0.09) 0%,transparent 70%)",filter:"blur(90px)",borderRadius:"50%" }}/>

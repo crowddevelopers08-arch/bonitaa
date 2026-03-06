@@ -8,11 +8,11 @@ const Navbar = () => {
 
   const menuItems = [
     { name: "Home", href: "/" },
-    { name: "About", href: "#about" },
+    { name: "About", href: "#About" },
     { name: "Services", href: "#services" },
     { name: "FAQ", href: "#faq" },
     { name: "Reviews", href: "#reviews" },
-    { name: "Contact", href: "#contact" },
+    { name: "Treatment", href: "#treatment" },
   ];
 
   useEffect(() => {

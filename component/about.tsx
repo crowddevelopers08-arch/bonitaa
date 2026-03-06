@@ -611,7 +611,7 @@ export default function AppointmentSection() {
         }
       `}</style>
 
-      <section className="relative w-full overflow-hidden" style={{ background:"#080b12", fontFamily:"'Outfit',sans-serif" }}>
+      <section id="About" className="relative w-full overflow-hidden" style={{ background:"#080b12", fontFamily:"'Outfit',sans-serif" }}>
 
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-0"/>
 

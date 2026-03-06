@@ -118,7 +118,7 @@ export default function ReviewsSection() {
         .carousel-track { transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
       `}</style>
 
-      <section className="relative w-full overflow-hidden" style={{ background:"#080b12", fontFamily:"'Outfit',sans-serif" }}>
+      <section  id="reviews" className="relative w-full overflow-hidden" style={{ background:"#080b12", fontFamily:"'Outfit',sans-serif" }}>
 
         {/* Orbs */}
         <div className="absolute pointer-events-none z-0" style={{ width:"clamp(280px,34vw,460px)",height:"clamp(280px,34vw,460px)",top:"-8%",right:"-6%",background:"radial-gradient(circle,rgba(221,185,90,0.09) 0%,transparent 70%)",filter:"blur(80px)",borderRadius:"50%" }}/>
