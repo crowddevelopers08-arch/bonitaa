@@ -328,7 +328,7 @@ export default function AgencySection() {
           </div>
 
           {/* ══════════════ RIGHT CONTENT (with mobile title and paragraph) ══════════════ */}
-          <div className="flex-1 flex flex-col justify-center px-6 sm:px-10 lg:px-14 py-14 lg:py-0">
+          <div className="flex-1 flex flex-col justify-center px-6 sm:px-10 lg:px-14 py-5 lg:py-0">
             {/* Eyebrow */}
             <Reveal dir="down" delay={0.05} className="mb-5 max-sm:mb-2">
               <div
@@ -352,7 +352,7 @@ export default function AgencySection() {
             </Reveal>
 
             {/* Headline */}
-            <Reveal dir="right" delay={0.12} className="mb-3">
+            <Reveal dir="right" delay={0.12} className="mb-3 max-sm:mb-0">
               <h1
                 style={{
                   fontFamily: "'Playfair Display',serif",
@@ -370,7 +370,7 @@ export default function AgencySection() {
             </Reveal>
 
             {/* Mobile Image Section (visible only on mobile) */}
-            <div className="lg:hidden w-full my-8">
+            <div className="lg:hidden w-full my-8 max-sm:my-3">
               <div className="relative w-full" style={{ height: "280px" }}>
                 {/* Experience badge for mobile - repositioned */}
                 <div
@@ -563,7 +563,7 @@ export default function AgencySection() {
             </Reveal>
 
             {/* Description */}
-            <Reveal dir="up" delay={0.32} className="mb-10">
+            <Reveal dir="up" delay={0.32} className="mb-10 max-sm:mb-5">
               <p
                 style={{
                   color: "rgba(240,232,213,0.55)",
@@ -588,7 +588,7 @@ export default function AgencySection() {
 
             {/* Buttons */}
             <Reveal dir="up" delay={0.44}>
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 max-sm:items-center">
                 <WalkthroughButton
                       label="Book An Appointment"
                       onClick={() => {

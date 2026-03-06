@@ -181,7 +181,7 @@ export default function HairSolutions() {
           </div>
 
           {/* CTA */}
-          <Reveal dir="up" delay={0.6} className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Reveal dir="up" delay={0.6} className="mt-14 max-sm:mt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <WalkthroughButton
                       label="Book An Appointment"
                       onClick={() => {

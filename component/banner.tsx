@@ -208,7 +208,7 @@ export default function HeroBanner() {
 
               {/* CTA buttons → from UP */}
               <Reveal dir="up" delay={0.55}>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                <div className="flex flex-col items-center sm:flex-row gap-3 justify-center lg:justify-start">
                   <WalkthroughButton
                       label="Book An Appointment"
                       onClick={() => {

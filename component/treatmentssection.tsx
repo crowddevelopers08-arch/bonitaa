@@ -276,7 +276,7 @@ export default function TreatmentsSection() {
             ))}
           </div>
 
-          <Reveal dir="up" delay={0.5} className="mt-14 flex justify-center">
+          <Reveal dir="up" delay={0.5} className="mt-14 flex justify-center max-sm:mt-10">
                 <WalkthroughButton
                       label="Book An Appointment"
                       onClick={() => {
