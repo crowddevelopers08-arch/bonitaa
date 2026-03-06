@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Reveal, CountUp, Stagger } from "../component/animation";
+import WalkthroughButton from "./buttoncomponent";
+import GhostGoldButton from "./viewbutton";
 
 const features = [
   "Natural Hairline Design",
@@ -207,25 +209,15 @@ export default function HeroBanner() {
               {/* CTA buttons → from UP */}
               <Reveal dir="up" delay={0.55}>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-                  <button   onClick={() => {
-    document.getElementById("Form")
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }}
-                    className="shimmer-btn btn-glow relative overflow-hidden cursor-pointer flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-xl font-semibold transition-all duration-300"
-                    style={{ background:"#ddb95a", color:"#080b12", fontSize:14, letterSpacing:"0.03em" }}
-                    onMouseEnter={e=>(e.currentTarget.style.background="#c9a44a")}
-                    onMouseLeave={e=>(e.currentTarget.style.background="#ddb95a")}
-                  >
-                    <CalendarIcon/> Book An Appointment
-                  </button>
-                  <button
-                    className="flex items-center justify-center cursor-pointer gap-2 px-6 sm:px-8 py-3.5 rounded-xl font-semibold transition-all duration-300"
-                    style={{ background:"transparent", color:"#ddb95a", border:"1.5px solid rgba(221,185,90,0.45)", fontSize:14 }}
-                    onMouseEnter={e=>{ (e.currentTarget as HTMLElement).style.background="rgba(221,185,90,0.08)"; (e.currentTarget as HTMLElement).style.borderColor="#ddb95a"; }}
-                    onMouseLeave={e=>{ (e.currentTarget as HTMLElement).style.background="transparent"; (e.currentTarget as HTMLElement).style.borderColor="rgba(221,185,90,0.45)"; }}
-                  >
-                    View Our Results →
-                  </button>
+                  <WalkthroughButton
+                      label="Book An Appointment"
+                      onClick={() => {
+                        document.getElementById("Form")
+                          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }}
+                      href=""
+                  />
+<GhostGoldButton label="View Our Results" />
                 </div>
               </Reveal>
             </div>

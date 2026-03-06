@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Reveal } from "../component/animation";
+import WalkthroughButton from "./buttoncomponent";
 
 const faqs = [
   { q: "Do you have experience treating my type of hair loss?", a: "Our experienced trichologists specialize in restoring hair regardless of the cause. We can address concerns like gradual thinning, sudden shedding, bald spots, alopecia areata, receding hairline, and androgenetic alopecia." },
@@ -283,15 +284,14 @@ export default function FaqSection() {
 
               <Reveal dir="up" delay={0.65} className="mt-6 lg:mt-8">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 lg:gap-4 max-sm:hidden">
-                  <button className="btn-gold flex items-center gap-2 text-xs lg:text-sm"   onClick={() => {
-    document.getElementById("Form")
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.4a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                    </svg>
-                    Talk to an Expert
-                  </button>
+                <WalkthroughButton
+                      label="Book An Appointment"
+                      onClick={() => {
+                        document.getElementById("Form")
+                          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }}
+                      href=""
+                  />
                   <p style={{ color:"rgba(240,232,213,0.35)", fontSize: "clamp(10px, 2vw, 12px)", lineHeight:1.6 }}>
                     Still have questions?{" "}
                     <span className="cursor-pointer" style={{ color:"rgba(221,185,90,0.65)", textDecoration:"underline", textDecorationStyle:"dotted", textUnderlineOffset:3 }}>

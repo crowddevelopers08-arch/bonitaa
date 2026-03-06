@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Calendar } from "lucide-react";
+import WalkthroughButton from "./buttoncomponent";
 
 const Navbared = () => {
   return (
@@ -41,23 +42,16 @@ const Navbared = () => {
             <a
               href="#Form"
               className="flex relative text-white px-6 py-3 rounded-full text-base font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 group"
-              style={{
-                background: "#ddb95a",
-                color: "#080b12",
-                boxShadow: "0 4px 20px rgba(221,185,90,0.3)",
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = "#c9a44a";
-                e.currentTarget.style.boxShadow = "0 6px 28px rgba(221,185,90,0.45)";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = "#ddb95a";
-                e.currentTarget.style.boxShadow = "0 4px 20px rgba(221,185,90,0.3)";
-              }}
             >
               <div className="flex items-center space-x-2">
-                <span>Book Your Consultant</span>
-                <Calendar className="w-4 h-4 group-hover:translate-x-1 transition-transform" style={{ color: "#080b12" }} />
+                <WalkthroughButton
+                      label="Book An Appointment"
+                      onClick={() => {
+                        document.getElementById("Form")
+                          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }}
+                      href=""
+                  />
               </div>
               {/* Shimmer effect */}
               <div className="absolute inset-0 rounded-full overflow-hidden">

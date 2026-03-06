@@ -1,5 +1,7 @@
 "use client";
 import { Reveal, CountUp } from "../component/animation";
+import WalkthroughButton from "./buttoncomponent";
+import GhostGoldButton from "./viewbutton";
 
 export default function AgencySection() {
   return (
@@ -587,34 +589,18 @@ export default function AgencySection() {
             {/* Buttons */}
             <Reveal dir="up" delay={0.44}>
               <div className="flex flex-col sm:flex-row gap-3">
-                <button
-                  className="btn-primary flex items-center justify-center gap-2"
-                  onClick={() => {
-                    document
-                      .getElementById("Form")
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
-                  }}
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect x="3" y="4" width="18" height="18" rx="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                  </svg>
-                  Book A Consultation
-                </button>
-                <button className="btn-outline flex items-center justify-center gap-2">
-                  View Our Results →
-                </button>
+                <WalkthroughButton
+                      label="Book An Appointment"
+                      onClick={() => {
+                        document.getElementById("Form")
+                          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }}
+                      href=""
+                  />
+                <GhostGoldButton
+                      label="View Our Results"
+                      href=""
+                  />
               </div>
             </Reveal>
           </div>

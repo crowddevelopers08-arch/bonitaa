@@ -1,5 +1,7 @@
 "use client";
 
+import WalkthroughButton from "./buttoncomponent";
+
 const sections = [
   {
     icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
@@ -129,19 +131,11 @@ export default function PrivacyPolicy() {
 
           {/* Back button */}
           <div className="mt-8 flex justify-center fade-up" style={{ animationDelay:"0.65s" }}>
-            <a href="/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300"
-              style={{ background:"rgba(221,185,90,0.08)", border:"1.5px solid rgba(221,185,90,0.28)", color:"#ddb95a", fontSize:13, textDecoration:"none" }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background="rgba(221,185,90,0.15)"; (e.currentTarget as HTMLElement).style.borderColor="#ddb95a"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background="rgba(221,185,90,0.08)"; (e.currentTarget as HTMLElement).style.borderColor="rgba(221,185,90,0.28)"; }}
-            >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12,19 5,12 12,5"/>
-              </svg>
-              Back to Home
-            </a>
+                           <WalkthroughButton
+                      label=" Back to Home"
+                      href="/"
+                  />
           </div>
-
         </div>
 
         <div className="w-full h-px" style={{ background:"linear-gradient(90deg,transparent,#ddb95a,transparent)" }}/>

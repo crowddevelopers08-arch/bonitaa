@@ -7,6 +7,7 @@ import MobileActionBar from "@/component/mobile-bar";
 import Navbar from "@/component/navbar";
 import PopupAd from "@/component/popadds";
 import ReviewsSection from "@/component/reviewsection";
+import BackToTop from "@/component/scrool";
 import TransformationsSection from "@/component/transformationssection";
 import TreatmentsSection from "@/component/treatmentssection";
 import WhyBonitaa from "@/component/whybonita";
@@ -27,6 +28,7 @@ export default function Home() {
     <Footer  />
     <MobileActionBar  />
     <PopupAd />
+    <BackToTop />
     
     </>
   );

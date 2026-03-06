@@ -1,5 +1,7 @@
 "use client";
 import { Reveal } from "../component/animation";
+import WalkthroughButton from "./buttoncomponent";
+import GhostGoldButton from "./viewbutton";
 
 export default function ThankYouPage() {
   return (
@@ -96,17 +98,17 @@ export default function ThankYouPage() {
 
           {/* CTAs */}
           <Reveal dir="up" delay={0.48} className="flex flex-col sm:flex-row gap-3 w-full justify-center">
-            <a href="/" className="btn-gold flex items-center justify-center gap-2 no-underline">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
-              </svg>
-              Back to Home
+            <a href="/" className=" flex items-center justify-center gap-2 no-underline">
+                <WalkthroughButton
+                      label=" Back to Home"
+                      href=""
+                  />
+             
             </a>
-            <a href="/services" className="btn-ghost flex items-center justify-center gap-2 no-underline">
-              Explore Treatments
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/>
-              </svg>
+            <a href="/" className="flex items-center justify-center gap-2">
+              
+<GhostGoldButton label="Explore Treatments" />
+
             </a>
           </Reveal>
 

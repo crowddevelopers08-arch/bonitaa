@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Menu, X, Phone, Calendar } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import WalkthroughButton from "./buttoncomponent";
+// import WalkthroughButton from "@/components/WalkthroughButton";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -35,9 +37,9 @@ const Navbar = () => {
       {/* Main Navbar Container */}
       <div className="container-fluid ml-5 max-sm:pl-0 max-sm:ml-0 mr-5 px-4 py-3 max-sm:px-4 max-sm:py-3">
         <div className="flex flex-col lg:flex-row justify-around items-center gap-4">
+
           {/* Left Section - Logo & Brand */}
           <div className="flex items-center justify-between w-full lg:w-auto">
-            {/* Logo Container */}
             <div className="relative">
               <div className="relative w-50 h-20 max-sm:h-16 rounded-xl flex items-center justify-center">
                 <div
@@ -87,7 +89,6 @@ const Navbar = () => {
                 }}
               >
                 {item.name}
-                {/* Underline effect */}
                 <span
                   className="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 rounded-full"
                   style={{ background: "#ddb95a" }}
@@ -96,45 +97,11 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Right Section - Contact Info */}
+          {/* Right Section - CTA Button (Desktop) */}
           <div className="hidden lg:flex gap-8">
-
-            {/* Book Consultant Button */}
-            <div className="text-center">
-              <div className="relative inline-block">
-                <div
-                  className="absolute rounded-full blur-md opacity-20"
-                  style={{ background: "#ddb95a" }}
-                ></div>
-                <a
-                  href="#Form"
-                  className="flex relative text-white px-6 py-3 rounded-xl text-base font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 group"
-                  style={{
-                    background: "#ddb95a",
-                    color: "#080b12",
-                    boxShadow: "0 4px 20px rgba(221,185,90,0.3)",
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.background = "#c9a44a";
-                    e.currentTarget.style.boxShadow = "0 6px 28px rgba(221,185,90,0.45)";
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.background = "#ddb95a";
-                    e.currentTarget.style.boxShadow = "0 4px 20px rgba(221,185,90,0.3)";
-                  }}
-                >
-                  <div className="flex items-center space-x-2">
-                    <span>Book Your Consultant</span>
-                    <Calendar className="w-4 h-4 group-hover:translate-x-1 transition-transform" style={{ color: "#080b12" }} />
-                  </div>
-                  {/* Shimmer effect */}
-                  <div className="absolute inset-0 rounded-full overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                  </div>
-                </a>
-              </div>
-            </div>
+            <WalkthroughButton label="Book Your Consultant" href="#Form" />
           </div>
+
         </div>
       </div>
 
@@ -168,41 +135,18 @@ const Navbar = () => {
             </a>
           ))}
 
-          {/* Mobile Contact Info */}
+          {/* Mobile CTA Button */}
           <div
-            className="pt-4 space-y-4 border-t mt-4"
+            className="pt-4 border-t mt-4 flex justify-center"
             style={{ borderColor: "rgba(221,185,90,0.15)" }}
           >
-
-            {/* Book Button */}
-            <div className="text-center px-4">
-              <div className="relative inline-block">
-                <div
-                  className="absolute -inset-3 rounded-full blur-md opacity-20"
-                  style={{ background: "#ddb95a" }}
-                ></div>
-                <a
-                  href="#Form"
-                  className="flex relative px-6 py-3 rounded-full text-base font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 group"
-                  style={{
-                    background: "#ddb95a",
-                    color: "#080b12",
-                    boxShadow: "0 4px 20px rgba(221,185,90,0.3)",
-                  }}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <div className="flex items-center space-x-2">
-                    <span>Book Your Consultant</span>
-                    <Calendar className="w-4 h-4 group-hover:translate-x-1 transition-transform" style={{ color: "#080b12" }} />
-                  </div>
-                  {/* Shimmer */}
-                  <div className="absolute inset-0 rounded-full overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                  </div>
-                </a>
-              </div>
-            </div>
+            <WalkthroughButton
+              label="Book Your Consultant"
+              href="#Form"
+              onClick={() => setIsMenuOpen(false)}
+            />
           </div>
+
         </div>
       </div>
 

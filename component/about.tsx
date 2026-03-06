@@ -387,6 +387,7 @@
 "use client";
 import { JSX, useEffect, useRef, useState } from "react";
 import { CountUp, Reveal } from "./animation";
+import WalkthroughButton from "./buttoncomponent";
 
 /* ── Icons ── */
 function UserIcon()  { return <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>; }
@@ -867,10 +868,15 @@ export default function AppointmentSection() {
 
                       <Reveal dir="up" delay={0.78} className="pt-3">
                         <div className="flex justify-center">
-                        <button className="book-btn rounded-xl" onClick={handleSubmit} disabled={loading}>
-                          <span className="relative z-10 flex items-center justify-center gap-2">
-                            <CalIcon/> Book An Appointment
-                          </span>
+                        <button className="rounded-xl" onClick={handleSubmit} disabled={loading}>
+                <WalkthroughButton
+                      label="Book An Appointment"
+                      onClick={() => {
+                        document.getElementById("Form")
+                          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }}
+                      href=""
+                  />
                         </button>
                         </div>
                       </Reveal>
