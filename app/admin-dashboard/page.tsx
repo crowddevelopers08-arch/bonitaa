@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Search, Filter, Download, Phone, Mail, Calendar, RefreshCw, Users, FileText, ChevronDown, ChevronUp } from "lucide-react"
+import { Search, Filter, Download, Phone, Mail, Calendar, RefreshCw, Users, FileText, ChevronDown, ChevronUp, Link2 } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,8 +21,8 @@ interface Lead {
   name: string
   phone: string
   email: string
-  treatment: string        // This should have data
-  procedure: string       // This should have data
+  treatment: string
+  procedure: string
   message: string
   city: string
   age: string
@@ -32,6 +32,8 @@ interface Lead {
   status: 'new' | 'contacted' | 'scheduled' | 'converted' | 'lost'
   telecrmSynced: boolean
   telecrmId?: string
+  pageUrl?: string | null      // Allow null
+  referrerUrl?: string | null  // Allow null
   createdAt: string
   updatedAt: string
 }
@@ -54,6 +56,7 @@ export default function LeadsTable({
   const [treatmentFilter, setTreatmentFilter] = useState<string>("all")
   const [dateFilter, setDateFilter] = useState<string>("all")
   const [formFilter, setFormFilter] = useState<string>("all")
+  const [urlFilter, setUrlFilter] = useState<string>("all")
   const [expandedLead, setExpandedLead] = useState<string | null>(null)
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null)
   const [isClient, setIsClient] = useState(false)
@@ -100,17 +103,25 @@ export default function LeadsTable({
     if (!sortConfig) return 0
     
     const { key, direction } = sortConfig
-    let aValue = a[key as keyof Lead]
-    let bValue = b[key as keyof Lead]
-    let aCompare: string | number = aValue as string
-    let bCompare: string | number = bValue as string
+    const aValue = a[key as keyof Lead]
+    const bValue = b[key as keyof Lead]
+    
+    // Handle undefined or null values
+    if (aValue === undefined || aValue === null) return direction === 'asc' ? -1 : 1
+    if (bValue === undefined || bValue === null) return direction === 'asc' ? 1 : -1
+    
+    let aCompare: string | number
+    let bCompare: string | number
     
     if (key === 'createdAt' || key === 'updatedAt') {
       aCompare = new Date(aValue as string).getTime()
       bCompare = new Date(bValue as string).getTime()
-    } else if (typeof aValue === 'string') {
+    } else if (typeof aValue === 'string' && typeof bValue === 'string') {
       aCompare = aValue.toLowerCase()
-      bCompare = (bValue as string).toLowerCase()
+      bCompare = bValue.toLowerCase()
+    } else {
+      aCompare = String(aValue).toLowerCase()
+      bCompare = String(bValue).toLowerCase()
     }
     
     if (aCompare < bCompare) return direction === 'asc' ? -1 : 1
@@ -119,7 +130,7 @@ export default function LeadsTable({
   })
 
   // Safe string conversion for filtering
-  const safeString = (value: any): string => {
+  const safeString = (value: string | null | undefined): string => {
     if (value === null || value === undefined) return ''
     return String(value).toLowerCase()
   }
@@ -133,14 +144,33 @@ export default function LeadsTable({
       safeString(lead.treatment).includes(safeString(searchTerm)) ||
       safeString(lead.message).includes(safeString(searchTerm)) ||
       safeString(lead.city).includes(safeString(searchTerm)) ||
-      safeString(lead.formName).includes(safeString(searchTerm))
+      safeString(lead.formName).includes(safeString(searchTerm)) ||
+      safeString(lead.pageUrl).includes(safeString(searchTerm)) ||
+      safeString(lead.referrerUrl).includes(safeString(searchTerm))
     
     const matchesStatus = statusFilter === "all" || lead.status === statusFilter
     const matchesTreatment = treatmentFilter === "all" || lead.treatment === treatmentFilter
     const matchesDate = dateFilter === "all" || isWithinDateRange(lead.createdAt, dateFilter)
     const matchesForm = formFilter === "all" || lead.formName === formFilter
     
-    return matchesSearch && matchesStatus && matchesTreatment && matchesDate && matchesForm
+    // Handle URL filter
+    let matchesUrl = true
+    if (urlFilter !== "all") {
+      if (urlFilter === "direct") {
+        matchesUrl = !lead.pageUrl
+      } else if (lead.pageUrl) {
+        try {
+          const urlObj = new URL(lead.pageUrl)
+          matchesUrl = urlObj.pathname === urlFilter
+        } catch {
+          matchesUrl = false
+        }
+      } else {
+        matchesUrl = false
+      }
+    }
+    
+    return matchesSearch && matchesStatus && matchesTreatment && matchesDate && matchesForm && matchesUrl
   })
 
   function isWithinDateRange(date: string, range: string): boolean {
@@ -178,8 +208,7 @@ export default function LeadsTable({
     return <Badge variant="outline" className={`${config.color} border`}>{config.label}</Badge>
   }
 
-  // Updated getFormBadge function with bonitaa-form support
-  const getFormBadge = (formName: string) => {
+  const getFormBadge = (formName: string | null | undefined) => {
     if (!formName) {
       return <Badge variant="outline" className="bg-gray-100 text-gray-800 border-gray-200 text-xs">Unknown</Badge>
     }
@@ -195,6 +224,20 @@ export default function LeadsTable({
     return <Badge variant="outline" className={`${config.color} border text-xs`}>{config.label}</Badge>
   }
 
+  // Function to get URL badge
+  const getUrlBadge = (url: string | null | undefined) => {
+    if (!url) return <Badge variant="outline" className="bg-gray-100 text-gray-800 border-gray-200 text-xs">Direct</Badge>;
+    
+    // Extract domain or page name
+    try {
+      const urlObj = new URL(url);
+      const path = urlObj.pathname === '/' ? 'Homepage' : urlObj.pathname.split('/').pop() || 'Page';
+      return <Badge variant="outline" className="bg-blue-100 text-blue-800 border-blue-200 text-xs">{path}</Badge>;
+    } catch {
+      return <Badge variant="outline" className="bg-gray-100 text-gray-800 border-gray-200 text-xs">Unknown</Badge>;
+    }
+  };
+
   const getTelecrmBadge = (synced: boolean) => {
     return synced ? 
       <Badge className="bg-green-100 text-green-800 border-green-200">Synced</Badge> :
@@ -202,7 +245,22 @@ export default function LeadsTable({
   }
 
   // Get unique form names for filter
-  const uniqueFormNames = Array.from(new Set(leads.map(lead => lead.formName).filter(Boolean)))
+  const uniqueFormNames = Array.from(new Set(
+    leads.map(lead => lead.formName).filter((name): name is string => !!name)
+  ))
+  
+  // Get unique URLs for filter
+  const uniqueUrls = Array.from(new Set(
+    leads.map(lead => {
+      if (!lead.pageUrl) return null;
+      try {
+        const urlObj = new URL(lead.pageUrl);
+        return urlObj.pathname;
+      } catch {
+        return null;
+      }
+    }).filter((url): url is string => url !== null)
+  ));
 
   // Get statistics with form grouping
   const getFormStats = () => {
@@ -223,10 +281,44 @@ export default function LeadsTable({
     return stats
   }
 
+  // Get URL statistics
+  const getUrlStats = () => {
+    const stats: { [key: string]: { total: number, new: number, converted: number } } = {}
+    
+    leads.forEach(lead => {
+      if (!lead.pageUrl) {
+        const key = 'Direct/Unknown'
+        if (!stats[key]) stats[key] = { total: 0, new: 0, converted: 0 }
+        stats[key].total++
+        if (lead.status === 'new') stats[key].new++
+        if (lead.status === 'converted') stats[key].converted++
+        return
+      }
+      
+      try {
+        const urlObj = new URL(lead.pageUrl);
+        const key = urlObj.pathname === '/' ? 'Homepage' : urlObj.pathname.split('/').pop() || 'Page';
+        if (!stats[key]) stats[key] = { total: 0, new: 0, converted: 0 }
+        stats[key].total++
+        if (lead.status === 'new') stats[key].new++
+        if (lead.status === 'converted') stats[key].converted++
+      } catch {
+        const key = 'Invalid URL'
+        if (!stats[key]) stats[key] = { total: 0, new: 0, converted: 0 }
+        stats[key].total++
+        if (lead.status === 'new') stats[key].new++
+        if (lead.status === 'converted') stats[key].converted++
+      }
+    })
+    
+    return stats
+  }
+
   const formStats = getFormStats()
+  const urlStats = getUrlStats()
 
   const exportToCSV = () => {
-    const headers = ["Name", "Phone", "Email", "Treatment", "Message", "City", "Age", "Status", "Form Name", "Source", "TeleCRM Synced", "Created At"]
+    const headers = ["Name", "Phone", "Email", "Treatment", "Message", "City", "Age", "Status", "Form Name", "Source", "Page URL", "Referrer URL", "TeleCRM Synced", "Created At"]
     const csvData = filteredLeads.map(lead => [
       lead.name || '',
       lead.phone || '',
@@ -238,6 +330,8 @@ export default function LeadsTable({
       lead.status || '',
       lead.formName || '',
       lead.source || '',
+      lead.pageUrl || '',
+      lead.referrerUrl || '',
       lead.telecrmSynced ? "Yes" : "No",
       isClient ? new Date(lead.createdAt).toLocaleString('en-IN') : lead.createdAt
     ])
@@ -312,7 +406,7 @@ export default function LeadsTable({
   }
 
   // Helper function to format form name for display
-  const formatFormName = (formName: string) => {
+  const formatFormName = (formName: string | null | undefined) => {
     if (!formName) return 'Unknown Form'
     
     const formDisplayNames: { [key: string]: string } = {
@@ -323,6 +417,13 @@ export default function LeadsTable({
     }
     
     return formDisplayNames[formName.toLowerCase()] || formDisplayNames.default
+  }
+
+  // Helper function to open URL in new tab
+  const openUrl = (url: string | null | undefined) => {
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer')
+    }
   }
 
   return (
@@ -359,7 +460,7 @@ export default function LeadsTable({
         </CardHeader>
         
         <CardContent className="p-6">
-          {/* Form Statistics - Updated to include bonitaa-form */}
+          {/* Form Statistics */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             {Object.entries(formStats).map(([formName, stats]) => (
               <Card key={formName} className="p-4 bg-white border-gray-200 shadow-sm">
@@ -395,13 +496,33 @@ export default function LeadsTable({
             ))}
           </div>
 
+          {/* URL Statistics */}
+          <div className="mb-8">
+            <h3 className="text-sm font-medium text-gray-700 mb-3 flex items-center gap-2">
+              <Link2 className="h-4 w-4" />
+              Traffic Sources by Page
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+              {Object.entries(urlStats).map(([page, stats]) => (
+                <div key={page} className="bg-gray-50 p-2 rounded-lg border border-gray-200">
+                  <div className="text-xs font-medium text-gray-700 truncate" title={page}>{page}</div>
+                  <div className="text-lg font-bold text-gray-900">{stats.total}</div>
+                  <div className="flex justify-between text-xs text-gray-600">
+                    <span>New: {stats.new}</span>
+                    <span>Conv: {stats.converted}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Filters */}
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <div className="grid grid-cols-1 md:grid-cols-7 gap-4 mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
             <div className="md:col-span-2">
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                 <Input
-                  placeholder="Search by name, phone, email, treatment, form..."
+                  placeholder="Search by name, phone, email, treatment, form, URL..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10 bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
@@ -457,9 +578,25 @@ export default function LeadsTable({
                     {formName === 'hairtreatment' ? 'Hair Treatment' : 
                      formName === 'skin and hair leads' ? 'Skin & Hair' : 
                      formName === 'bonitaa-form' ? 'Bonitaa Appointments' :
-                     formName === 'Unknown' ? 'Unknown Form' : formName}
+                     formName}
                   </SelectItem>
                 ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={urlFilter} onValueChange={setUrlFilter}>
+              <SelectTrigger className="bg-white border-gray-300 text-gray-900">
+                <Link2 className="h-4 w-4 mr-2 text-gray-500" />
+                <SelectValue placeholder="Page" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border-gray-300 text-gray-900">
+                <SelectItem value="all" className="focus:bg-gray-100">All Pages</SelectItem>
+                {uniqueUrls.map(url => (
+                  <SelectItem key={url} value={url} className="focus:bg-gray-100">
+                    {url === '/' ? 'Homepage' : url}
+                  </SelectItem>
+                ))}
+                <SelectItem value="direct" className="focus:bg-gray-100">Direct/Unknown</SelectItem>
               </SelectContent>
             </Select>
 
@@ -499,6 +636,7 @@ export default function LeadsTable({
                     <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Form</th>
                     <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Status</th>
                     <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Sync</th>
+                    <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Source URL</th>
                     <th 
                       className="h-12 px-4 text-left align-middle font-medium text-gray-700 cursor-pointer hover:bg-gray-100 transition-colors"
                       onClick={() => handleSort('createdAt')}
@@ -516,7 +654,7 @@ export default function LeadsTable({
                 <tbody>
                   {loading ? (
                     <tr>
-                      <td colSpan={8} className="p-8 text-center text-gray-500">
+                      <td colSpan={9} className="p-8 text-center text-gray-500">
                         <div className="flex items-center justify-center gap-2">
                           <RefreshCw className="h-4 w-4 animate-spin" />
                           Loading leads...
@@ -525,7 +663,7 @@ export default function LeadsTable({
                     </tr>
                   ) : filteredLeads.length === 0 ? (
                     <tr>
-                      <td colSpan={8} className="p-8 text-center text-gray-500">
+                      <td colSpan={9} className="p-8 text-center text-gray-500">
                         No leads found matching your criteria
                       </td>
                     </tr>
@@ -632,6 +770,32 @@ export default function LeadsTable({
                             <td className="p-4 align-middle">
                               {getTelecrmBadge(lead.telecrmSynced)}
                             </td>
+                            <td className="p-4 align-middle">
+                              <div className="flex flex-col gap-1">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    if (lead.pageUrl) openUrl(lead.pageUrl);
+                                  }}
+                                  className="text-left"
+                                  disabled={!lead.pageUrl}
+                                >
+                                  {getUrlBadge(lead.pageUrl)}
+                                </button>
+                                {lead.referrerUrl && (
+                                  <div 
+                                    className="text-xs text-gray-500 truncate max-w-[150px] cursor-pointer hover:text-blue-600"
+                                    title={lead.referrerUrl}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      openUrl(lead.referrerUrl);
+                                    }}
+                                  >
+                                    Ref: {lead.referrerUrl.substring(0, 25)}...
+                                  </div>
+                                )}
+                              </div>
+                            </td>
                             <td className="p-4 align-middle text-sm text-gray-600">
                               {formattedDate.date}
                               <br />
@@ -671,7 +835,7 @@ export default function LeadsTable({
                           </tr>
                           {expandedLead === lead.id && (
                             <tr className="bg-gray-50 border-b border-gray-200">
-                              <td colSpan={8} className="p-4">
+                              <td colSpan={9} className="p-4">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                                   <div>
                                     <h4 className="font-medium text-gray-900 mb-2">Lead Details</h4>
@@ -683,6 +847,34 @@ export default function LeadsTable({
                                       <div><span className="font-medium">Form:</span> {formatFormName(lead.formName)}</div>
                                       {lead.telecrmId && (
                                         <div><span className="font-medium">TeleCRM ID:</span> {lead.telecrmId}</div>
+                                      )}
+                                      {lead.pageUrl && (
+                                        <div>
+                                          <span className="font-medium">Page URL:</span>{' '}
+                                          <a 
+                                            href={lead.pageUrl} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="text-blue-600 hover:underline break-all"
+                                            onClick={(e) => e.stopPropagation()}
+                                          >
+                                            {lead.pageUrl}
+                                          </a>
+                                        </div>
+                                      )}
+                                      {lead.referrerUrl && (
+                                        <div>
+                                          <span className="font-medium">Referrer URL:</span>{' '}
+                                          <a 
+                                            href={lead.referrerUrl} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="text-blue-600 hover:underline break-all"
+                                            onClick={(e) => e.stopPropagation()}
+                                          >
+                                            {lead.referrerUrl}
+                                          </a>
+                                        </div>
                                       )}
                                     </div>
                                   </div>
@@ -714,8 +906,10 @@ export default function LeadsTable({
                 formFilter === 'hairtreatment' ? 'Hair Treatment' : 
                 formFilter === 'skin and hair leads' ? 'Skin & Hair' : 
                 formFilter === 'bonitaa-form' ? 'Bonitaa Appointments' :
-                formFilter === 'Unknown' ? 'Unknown Form' : formFilter
+                formFilter
               }`}
+              {urlFilter !== 'all' && urlFilter !== 'direct' && ` • Page: ${urlFilter}`}
+              {urlFilter === 'direct' && ' • Page: Direct/Unknown'}
             </div>
             <div className="flex gap-4">
               <div className="flex items-center gap-1">

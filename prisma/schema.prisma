@@ -26,6 +26,8 @@ model Lead {
   status         String    @default("new")
   telecrmSynced  Boolean   @default(false)
   telecrmId      String?
+  pageUrl        String?   // Add this field to store the URL where form was submitted
+  referrerUrl    String?   // Add this field to store the referring URL
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 

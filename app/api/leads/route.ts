@@ -26,6 +26,8 @@ interface LeadData {
   consent?: boolean;
   status?: string;
   concern?: string; // For branch selection in bonitaa form
+  pageUrl?: string | null;  // Allow null
+  referrerUrl?: string | null; // Allow null
 }
 
 function logEnvironmentStatus() {
@@ -79,6 +81,7 @@ async function saveLeadToDatabase(leadData: LeadData, telecrmResult?: any) {
     email: leadData.email,
     treatment: leadData.treatment || leadData.test || leadData.concern,
     formName: leadData.formName,
+    pageUrl: leadData.pageUrl, // Log URL tracking
   });
 
   // Map concern to treatment if it exists (for bonitaa form)
@@ -99,6 +102,8 @@ async function saveLeadToDatabase(leadData: LeadData, telecrmResult?: any) {
       source: leadData.source || "Website",
       formName: leadData.formName || "Website Leads",
       status: leadData.status || "new",
+      pageUrl: leadData.pageUrl ?? null, // Use nullish coalescing to handle undefined
+      referrerUrl: leadData.referrerUrl ?? null, // Use nullish coalescing to handle undefined
 
       // ✅ Only true when TeleCRM confirmed
       telecrmSynced: !!telecrmResult?.synced,
@@ -106,7 +111,12 @@ async function saveLeadToDatabase(leadData: LeadData, telecrmResult?: any) {
     },
   });
 
-  console.log("✅ Lead saved to database:", { id: lead.id, name: lead.name, phone: lead.phone });
+  console.log("✅ Lead saved to database:", { 
+    id: lead.id, 
+    name: lead.name, 
+    phone: lead.phone,
+    pageUrl: lead.pageUrl 
+  });
   return lead;
 }
 
@@ -130,6 +140,10 @@ async function sendToTeleCRM(leadData: LeadData) {
   // Get branch/location from concern field (bonitaa form)
   const branch = leadData.concern || "Not specified";
 
+  // Safely get URL strings
+  const pageUrl = leadData.pageUrl || "Not specified";
+  const referrerUrl = leadData.referrerUrl || "Not specified";
+
   // ✅ Start minimal (most stable). Add extra info as notes.
   const telecrmPayload = {
     fields: {
@@ -145,6 +159,8 @@ async function sendToTeleCRM(leadData: LeadData) {
       { type: "SYSTEM_NOTE", text: `Message: ${leadData.message || "Not specified"}` },
       { type: "SYSTEM_NOTE", text: `Consent Given: ${leadData.consent ? "Yes" : "No"}` },
       { type: "SYSTEM_NOTE", text: `Source: ${leadData.source || "Website"}` },
+      { type: "SYSTEM_NOTE", text: `Page URL: ${pageUrl}` }, // Use safe variable
+      { type: "SYSTEM_NOTE", text: `Referrer: ${referrerUrl}` }, // Use safe variable
     ],
   };
 
@@ -248,10 +264,20 @@ export async function POST(request: NextRequest) {
   try {
     data = await request.json();
 
+    // Get URL information from headers
+    const headersList = request.headers;
+    const referer = headersList.get('referer') || headersList.get('referrer');
+    
+    // Get the full URL of the request
+    const url = new URL(request.url);
+    const baseUrl = `${url.protocol}//${url.host}`;
+
     console.log("📨 Received lead submission:", {
       name: data.name,
       phoneMasked: data.phone ? data.phone.substring(0, 3) + "****" + data.phone.substring(Math.max(0, data.phone.length - 3)) : "N/A",
       formName: data.formName,
+      pageUrl: data.pageUrl,
+      referrerUrl: data.referrerUrl || referer,
     });
 
     if (!data.name || !data.phone) {
@@ -261,7 +287,35 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const validatedData = data as LeadData;
+    const validatedData: LeadData = {
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      treatment: data.treatment,
+      procedure: data.procedure,
+      message: data.message,
+      city: data.city,
+      age: data.age,
+      pincode: data.pincode,
+      test: data.test,
+      source: data.source,
+      formName: data.formName,
+      consent: data.consent,
+      status: data.status,
+      concern: data.concern,
+      pageUrl: data.pageUrl ?? null, // Ensure pageUrl is string | null
+      referrerUrl: data.referrerUrl ?? null, // Ensure referrerUrl is string | null
+    };
+
+    // Ensure URL fields are set
+    if (!validatedData.pageUrl) {
+      // If pageUrl not provided in request, try to get from referer
+      validatedData.pageUrl = referer || null;
+    }
+    
+    if (!validatedData.referrerUrl && referer) {
+      validatedData.referrerUrl = referer;
+    }
 
     // ✅ TeleCRM sync (optional)
     let telecrmResponse: any = null;
@@ -284,12 +338,14 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
       formName: validatedData.formName || "Website Leads",
       message: "Thank you! We have received your request and will contact you soon.",
+      pageUrl: dbLead.pageUrl, // Include in response for debugging
     };
 
     console.log("✅ Final response:", {
       leadId: dbLead.id,
       telecrmSynced: !!telecrmResponse?.synced,
       telecrmId: telecrmResponse?.leadId || telecrmResponse?.id || null,
+      pageUrl: dbLead.pageUrl,
     });
 
     return NextResponse.json(responseData, { status: 200 });
@@ -317,6 +373,7 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get("search") || "";
     const status = searchParams.get("status");
     const formName = searchParams.get("formName");
+    const pageUrl = searchParams.get("pageUrl"); // Add URL filtering
     const page = parseInt(searchParams.get("page") || "1", 10);
     const limit = parseInt(searchParams.get("limit") || "100", 10);
     const skip = (page - 1) * limit;
@@ -332,11 +389,13 @@ export async function GET(request: NextRequest) {
         { message: { contains: search, mode: "insensitive" } },
         { pincode: { contains: search, mode: "insensitive" } },
         { formName: { contains: search, mode: "insensitive" } },
+        { pageUrl: { contains: search, mode: "insensitive" } }, // Search in URLs
       ];
     }
 
     if (status && status !== "all") where.status = status;
     if (formName && formName !== "all") where.formName = formName;
+    if (pageUrl && pageUrl !== "all") where.pageUrl = { contains: pageUrl, mode: "insensitive" };
 
     const [leads, total] = await Promise.all([
       prisma.lead.findMany({ where, orderBy: { createdAt: "desc" }, skip, take: limit }),
@@ -363,6 +422,8 @@ export async function GET(request: NextRequest) {
           status: lead.status,
           telecrmSynced: lead.telecrmSynced,
           telecrmId: lead.telecrmId,
+          pageUrl: lead.pageUrl, // Include in response (can be null)
+          referrerUrl: lead.referrerUrl, // Include in response (can be null)
           createdAt: lead.createdAt.toISOString(),
           updatedAt: lead.updatedAt.toISOString(),
         })),
