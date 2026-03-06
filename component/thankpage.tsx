@@ -23,7 +23,7 @@ export default function ThankYouPage() {
         .btn-ghost:hover { background:rgba(221,185,90,0.08); border-color:#ddb95a; transform:translateY(-2px); }
       `}</style>
 
-      <main className="relative min-h-screen w-full flex items-center justify-center overflow-hidden"
+      <main className="relative w-full flex items-center justify-center overflow-hidden"
         style={{ background:"#080b12", fontFamily:"'Outfit',sans-serif" }}>
 
         {/* Ambient orbs */}
@@ -35,7 +35,7 @@ export default function ThankYouPage() {
         <div className="absolute top-0 left-0 right-0 h-px" style={{ background:"linear-gradient(90deg,transparent,#ddb95a,transparent)" }}/>
         <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background:"linear-gradient(90deg,transparent,#ddb95a,transparent)" }}/>
 
-        <div className="relative z-10 flex flex-col items-center text-center px-4 py-16 max-w-lg mx-auto">
+        <div className="relative z-10 flex flex-col items-center text-center px-4 max-sm:py-6 py-8 max-w-lg mx-auto">
 
           {/* Animated check circle */}
           <Reveal dir="down" delay={0.0}>

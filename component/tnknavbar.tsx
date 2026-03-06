@@ -45,12 +45,8 @@ const Navbared = () => {
             >
               <div className="flex items-center space-x-2">
                 <WalkthroughButton
-                      label="Book An Appointment"
-                      onClick={() => {
-                        document.getElementById("Form")
-                          ?.scrollIntoView({ behavior: "smooth", block: "start" });
-                      }}
-                      href=""
+                      label="Call Now"
+                      href="tel:+91 9363707090" 
                   />
               </div>
               {/* Shimmer effect */}
