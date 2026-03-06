@@ -108,7 +108,7 @@ const Navbar = () => {
                 ></div>
                 <a
                   href="#Form"
-                  className="flex relative text-white px-6 py-3 rounded-full text-base font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 group"
+                  className="flex relative text-white px-6 py-3 rounded-xl text-base font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 group"
                   style={{
                     background: "#ddb95a",
                     color: "#080b12",

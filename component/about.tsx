@@ -383,7 +383,7 @@
 // }
 
 // components/AppointmentSection.tsx
-// components/AppointmentSection.tsx
+
 "use client";
 import { JSX, useEffect, useRef, useState } from "react";
 import { CountUp, Reveal } from "./animation";
@@ -409,9 +409,27 @@ const fields = [
 ] satisfies { name:string; placeholder:string; type:string; icon:JSX.Element; dir:"left"|"right"; options?:string[] }[];
 
 const badges = [
-  { icon:"🏆", to:15,   suffix:"+",  sub:"Years of Excellence"    },
-  { icon:"🔬", to:18,   suffix:"+",  sub:"FDA Approved Treatments" },
-  { icon:"😊", to:5000, suffix:"+",  sub:"Happy Patients"          },
+  {
+    image: "/icon.png",
+    imageTint: "#ddb95a",
+    to: 15,
+    suffix: "+",
+    sub: "Years of Excellence",
+  },
+  {
+    image: "/icon1.png",
+    imageTint: "#ddb95a",
+    to: 18,
+    suffix: "+",
+    sub: "FDA Approved Treatments",
+  },
+  {
+    image: "/icon2.png",
+    imageTint: "#ddb95a",
+    to: 5000,
+    suffix: "+",
+    sub: "Happy Patients",
+  },
 ];
 
 export default function AppointmentSection() {
@@ -573,10 +591,10 @@ export default function AppointmentSection() {
 
         .book-btn {
           position:relative; overflow:hidden; cursor:pointer; border:none;
-          width:100%; padding:15px 40px; border-radius:100px;
+          padding:15px 40px; width:100%;
           background:linear-gradient(90deg,#b8962e,#ddb95a,#e8cc7a,#ddb95a,#b8962e);
           background-size:200% auto;
-          font-family:'Outfit',sans-serif; font-weight:700; font-size:15px;
+          font-family:'Outfit',sans-serif; font-weight:700; font-size:14px;
           color:#080b12; letter-spacing:0.07em;
           box-shadow:0 6px 30px rgba(221,185,90,0.35); transition:all 0.35s ease;
         }
@@ -673,23 +691,61 @@ export default function AppointmentSection() {
                 </div>
               </Reveal>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {badges.map((b, i) => (
-                  <Reveal key={i} dir="up" delay={0.42 + i * 0.12}>
-                    <div className="trust-card flex items-center gap-3 px-4 py-3.5 rounded-xl h-full" style={{ background:"rgba(221,185,90,0.05)",border:"1px solid rgba(221,185,90,0.18)" }}>
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background:"rgba(221,185,90,0.1)",border:"1px solid rgba(221,185,90,0.2)" }}>
-                        <span style={{ fontSize:20 }}>{b.icon}</span>
-                      </div>
-                      <div>
-                        <p className="font-bold leading-none" style={{ color:"#ddb95a",fontFamily:"'Playfair Display',serif",fontSize:16 }}>
-                          <CountUp to={b.to} suffix={b.suffix} duration={1600} delay={i * 150}/>
-                        </p>
-                        <p className="text-xs mt-1" style={{ color:"rgba(240,232,213,0.45)" }}>{b.sub}</p>
-                      </div>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+  {badges.map((b, i) => (
+    <Reveal key={i} dir="up" delay={0.42 + i * 0.12}>
+      <div
+        className="trust-card flex items-center gap-3 px-4 py-3.5 rounded-xl h-full"
+        style={{
+          background: "rgba(221,185,90,0.05)",
+          border: "1px solid rgba(221,185,90,0.18)",
+        }}
+      >
+        <div
+          className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+          style={{
+            background: "rgba(221,185,90,0.1)",
+            border: "1px solid rgba(221,185,90,0.2)",
+          }}
+        >
+          <img
+            src={b.image}
+            alt={b.sub}
+            className="w-5 h-5 object-contain"
+  style={{
+    filter:
+      "brightness(0) saturate(100%) invert(77%) sepia(34%) saturate(661%) hue-rotate(8deg) brightness(95%) contrast(88%)",
+  }}
+          />
+        </div>
+
+        <div>
+          <p
+            className="font-bold leading-none"
+            style={{
+              color: "#ddb95a",
+              fontFamily: "'Playfair Display', serif",
+              fontSize: 16,
+            }}
+          >
+            <CountUp
+              to={b.to}
+              suffix={b.suffix}
+              duration={1600}
+              delay={i * 150}
+            />
+          </p>
+          <p
+            className="text-xs mt-1"
+            style={{ color: "rgba(240,232,213,0.45)" }}
+          >
+            {b.sub}
+          </p>
+        </div>
+      </div>
+    </Reveal>
+  ))}
+</div>
 
               <Reveal dir="down" delay={0.72} className="hidden lg:flex items-center gap-3 mt-8">
                 <div className="float-a flex items-center gap-2 px-3.5 py-2 rounded-full" style={{ background:"rgba(221,185,90,0.08)",border:"1px solid rgba(221,185,90,0.25)" }}>
@@ -810,15 +866,17 @@ export default function AppointmentSection() {
                       ))}
 
                       <Reveal dir="up" delay={0.78} className="pt-3">
-                        <button className="book-btn" onClick={handleSubmit} disabled={loading}>
+                        <div className="flex justify-center">
+                        <button className="book-btn rounded-xl" onClick={handleSubmit} disabled={loading}>
                           <span className="relative z-10 flex items-center justify-center gap-2">
                             <CalIcon/> Book An Appointment
                           </span>
                         </button>
+                        </div>
                       </Reveal>
 
                       <Reveal dir="down" delay={0.88}>
-                        <p className="text-center pt-1" style={{ color:"rgba(221,185,90,0.3)",fontSize:11 }}>
+                        <p className="text-center pt-1" style={{ color:"rgba(221,185,90,0.3)",fontSize:14 }}>
                           🔒 Your information is 100% safe &amp; confidential
                         </p>
                         {/* URL tracking indicator (hidden for users, visible for debugging) */}

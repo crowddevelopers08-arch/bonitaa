@@ -36,7 +36,7 @@ export default function Footer() {
         .glow-dot { animation: glowPulse 2s ease-in-out infinite; }
         .f-link {
           color: rgba(240,232,213,0.45);
-          font-size: 13px;
+          font-size: 15px;
           text-decoration: none;
           transition: all 0.22s ease;
           display: flex;
@@ -60,7 +60,7 @@ export default function Footer() {
           transform: translateY(-3px);
         }
         .branch-chip {
-          padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
+          padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;
           color: rgba(240,232,213,0.5); letter-spacing: 0.05em;
           border: 1px solid rgba(221,185,90,0.15);
           background: rgba(221,185,90,0.04);
@@ -113,7 +113,7 @@ export default function Footer() {
               </div>
             </div>
               </div>
-              <p style={{ color:"rgba(240,232,213,0.38)", fontSize:12.5, lineHeight:1.85, marginBottom:16 }}>
+              <p style={{ color:"rgba(240,232,213,0.38)", fontSize:14, lineHeight:1.85, marginBottom:16 }}>
                 Coimbatore's #1 hair clinic. Trusted by 5,000+ patients across Tamil Nadu for expert hair restoration and care.
               </p>
 
@@ -126,13 +126,13 @@ export default function Footer() {
                     </svg>
                   ))}
                 </div>
-                <span style={{ color:"rgba(240,232,213,0.45)", fontSize:11 }}>4.9 / 5.0 Google Rating</span>
+                <span style={{ color:"rgba(240,232,213,0.45)", fontSize:14 }}>4.9 / 5.0 Google Rating</span>
               </div>
             </div>
 
             {/* Treatments */}
             <div>
-              <h4 className="font-bold mb-4" style={{ color:"rgba(240,232,213,0.75)", fontSize:12, letterSpacing:"0.1em", textTransform:"uppercase" }}>
+              <h4 className="font-bold mb-4" style={{ color:"rgba(240,232,213,0.75)", fontSize:15, letterSpacing:"0.1em", textTransform:"uppercase" }}>
                 Treatments
               </h4>
               <ul className="flex flex-col gap-2">
@@ -149,13 +149,13 @@ export default function Footer() {
 
             {/* Company */}
             <div>
-              <h4 className="font-bold mb-4" style={{ color:"rgba(240,232,213,0.75)", fontSize:12, letterSpacing:"0.1em", textTransform:"uppercase" }}>
+              <h4 className="font-bold mb-4" style={{ color:"rgba(240,232,213,0.75)", fontSize:15, letterSpacing:"0.1em", textTransform:"uppercase" }}>
                 Company
               </h4>
               <ul className="flex flex-col gap-2">
                 {links.company.map((l, i) => (
                   <li key={i}>
-                    <a href={l.href} className="f-link">
+                    <a href={l.href} className="f-link ">
                       <span className="f-dot w-1 h-1 rounded-full flex-shrink-0" style={{ background:"#ddb95a", opacity:0.3, transition:"opacity 0.2s" }}/>
                       {l.label}
                     </a>
@@ -166,10 +166,10 @@ export default function Footer() {
 
             {/* Contact + Branches */}
             <div>
-              <h4 className="font-bold mb-4" style={{ color:"rgba(240,232,213,0.75)", fontSize:12, letterSpacing:"0.1em", textTransform:"uppercase" }}>
+              <h4 className="font-bold mb-4" style={{ color:"rgba(240,232,213,0.75)", fontSize:15, letterSpacing:"0.1em", textTransform:"uppercase" }}>
                 Contact
               </h4>
-              <div className="flex flex-col gap-3 mb-6">
+              <div className="flex flex-col gap-3 mb-6 text-sm">
                 {[
                   { icon:"M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z", val:"+91 9363707090" },
                   { icon:"M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z", val:" 249, 250, 9th St Ext, Gandhipuram, Coimbatore, Tamil Nadu 641012" },
@@ -182,16 +182,16 @@ export default function Footer() {
                         <path d={c.icon}/>
                       </svg>
                     </div>
-                    <span style={{ color:"rgba(240,232,213,0.45)", fontSize:12, lineHeight:1.5 }}>{c.val}</span>
+                    <span style={{ color:"rgba(240,232,213,0.45)", fontSize:14, lineHeight:1.5 }}>{c.val}</span>
                   </div>
                 ))}
               </div>
 
               {/* Branches */}
-              <h4 className="font-bold mb-3" style={{ color:"rgba(240,232,213,0.75)", fontSize:12, letterSpacing:"0.1em", textTransform:"uppercase" }}>
+              <h4 className="font-bold mb-3" style={{ color:"rgba(240,232,213,0.75)", fontSize:15, letterSpacing:"0.1em", textTransform:"uppercase" }}>
                 Our Branches
               </h4>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 text-sm">
                 {branches.map((b, i) => (
                   <span key={i} className="branch-chip">{b}</span>
                 ))}
@@ -203,14 +203,14 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="relative z-10 w-full max-sm:mb-13" style={{ borderTop:"1px solid rgba(221,185,90,0.1)" }}>
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p style={{ color:"rgba(240,232,213,0.28)", fontSize:11.5 }}>
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 text-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p style={{ color:"rgba(240,232,213,0.28)", }}>
               © {new Date().getFullYear()} Bonitaa Hair & Skin Clinic. All rights reserved.
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 text-sm ">
               {links.legal.map((l, i) => (
                 <a key={i} href={l.href}
-                  style={{ color:"rgba(240,232,213,0.28)", fontSize:11.5, textDecoration:"none", transition:"color 0.2s" }}
+                  style={{ color:"rgba(240,232,213,0.28)", textDecoration:"none", transition:"color 0.2s" }}
                   onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.color="#ddb95a";}}
                   onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.color="rgba(240,232,213,0.28)";}}
                 >{l.label}</a>
