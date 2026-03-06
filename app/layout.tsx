@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import DarkBackground from "@/component/bg";
+import ChatWidget from "@/component/chatbox";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${outfit.variable} antialiased`}>
         <DarkBackground />
+        <ChatWidget />
         {children}
       </body>
     </html>
