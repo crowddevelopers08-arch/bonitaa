@@ -36,7 +36,7 @@ const BackToTop = () => {
     <>
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 group transition-all duration-500 ${
+        className={`fixed bottom-14 right-6 sm:bottom-8 sm:right-8 z-50 group transition-all duration-500 ${
           isVisible
             ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
             : "opacity-0 scale-90 translate-y-4 pointer-events-none"
