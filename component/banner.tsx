@@ -176,12 +176,7 @@ export default function HeroBanner() {
               {/* Headline → from LEFT */}
               <Reveal dir="left" delay={0.1}>
                 <h1 className="leading-tight mb-1" style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(1.6rem,3.5vw,3rem)", color:"rgba(240,232,213,0.9)", fontWeight:700 }}>
-                  Unlock Remarkable
-                </h1>
-              </Reveal>
-              <Reveal dir="left" delay={0.22} className="mb-5">
-                <h1 className="leading-tight" style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(1.6rem,3.5vw,3rem)", color:"#ddb95a", fontWeight:800 }}>
-                  Hair Results
+                  Real Results For Your Hair
                 </h1>
               </Reveal>
 
