@@ -181,7 +181,7 @@ export default function HeroBanner() {
               </Reveal>
               <Reveal dir="left" delay={0.22} className="mb-5">
                 <h1 className="leading-tight" style={{ fontFamily:"'Playfair Display',serif", fontSize:"clamp(1.6rem,3.5vw,3rem)", color:"#ddb95a", fontWeight:800 }}>
-                  Hair Results — Coimbatore
+                  Hair Results
                 </h1>
               </Reveal>
 
